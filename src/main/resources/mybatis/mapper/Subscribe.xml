@@ -19,14 +19,36 @@
 			, REPLYCNT
 			, (SELECT FILENAME FROM SATTACHED WHERE IMGTYPE = 'M' AND SNO = S.SNO) AS TITLEIMG
 			, SPOINT
-			FROM  SUBSCRIBE S
-			WHERE 1=1
-			AND STYPE = 'T'
+		FROM  SUBSCRIBE S
+		WHERE 1=1
+		AND STYPE = 'T'
 
 
 
 		ORDER BY SNO DESC
 
 	</select>
+
+	<!-- 구독 조회 -->
+	<select id="selectSubscribeRead" resultType="com.healthplan.work.vo.SubscribeVO">
+
+		SELECT
+			  SNO
+			, MNO
+			, UUID
+			, STYPE
+			, TITLE
+			, CONTENTS
+			, WDATE
+			, COUNTS
+			, FILEID
+			, REPLYCNT
+			, SPOINT
+		FROM  SUBSCRIBE
+		WHERE SNO = #{sno}
+
+	</select>
+
+
 
 </mapper>

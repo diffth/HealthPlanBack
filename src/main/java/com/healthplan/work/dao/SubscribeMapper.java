@@ -9,4 +9,6 @@ import java.util.List;
 public interface SubscribeMapper {
 
     public List<SubscribeVO> selectSubscribeList();
+
+    SubscribeVO selectSubscribeRead(int sno);
 }

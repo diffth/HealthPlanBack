@@ -17,4 +17,9 @@ public class SubscribeService {
 
         return subscribeMapper.selectSubscribeList();
     }
+
+    public SubscribeVO selectSubscribeRead(int sno) {
+
+        return subscribeMapper.selectSubscribeRead(sno);
+    }
 }
