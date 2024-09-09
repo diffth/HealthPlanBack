@@ -8,7 +8,13 @@ import java.util.List;
 @Mapper
 public interface SubscribeMapper {
 
-    public List<SubscribeVO> selectSubscribeList();
+    public List<SubscribeVO> selectSubscribeList() throws Exception ;
 
-    SubscribeVO selectSubscribeRead(int sno);
+    public SubscribeVO selectSubscribeRead(int sno) throws Exception ;
+
+    public void insertSubscribe(SubscribeVO vo) throws Exception ;
+
+    public void updateSubscribe(SubscribeVO vo) throws Exception ;
+
+    public void deleteSubscribe(int sno) throws Exception ;
 }

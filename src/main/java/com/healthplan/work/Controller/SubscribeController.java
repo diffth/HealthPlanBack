@@ -5,11 +5,9 @@ import com.healthplan.work.vo.SubscribeVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/subscribe")
@@ -32,10 +30,34 @@ public class SubscribeController {
         return list;
     }
 
+    @PostMapping("/subscribeInsert")
+    public String insert(SubscribeVO subscribeVO) throws Exception {
+        subscribeService.subscribeInsert(subscribeVO);
+        logger.info("subscribeInsert -> " + subscribeVO.toString());
+
+        return "redirect:/subscribe/subscribeList";
+    }
+
     @GetMapping({"/subscribeRead/{sno}", "/subscribeModify/{sno}"})
     public SubscribeVO read(@PathVariable("sno") int sno) throws Exception {
         SubscribeVO vo = subscribeService.selectSubscribeRead(sno);
         logger.info("subscribeRead -> " + vo.toString());
         return vo;
+    }
+
+    @PutMapping("/subscribeUpdate")
+    public String update(SubscribeVO subscribeVO) throws Exception {
+        subscribeService.subscribeUpdate(subscribeVO);
+        logger.info("subscribeUpdate -> " + subscribeVO.toString());
+
+        return "redirect:/subscribe/subscribeList";
+    }
+
+    @DeleteMapping("/subscribeDelete/{sno}")
+    public String delete(@PathVariable("sno") int sno) throws Exception {
+        subscribeService.subscribeDelete(sno);
+        logger.info("subscribeDelete -> " + sno);
+
+        return "redirect:/subscribe/subscribeList";
     }
 }
