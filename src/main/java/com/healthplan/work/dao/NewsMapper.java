@@ -7,5 +7,6 @@ import java.util.List;
 
 @Mapper
 public interface NewsMapper {
+
 	public List<NewsEntity> listNews();
 }

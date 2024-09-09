@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.healthplan.work.dao.SubscribeMapper">
+
+	<!-- 구독 목록 -->
+	<select id="selectSubscribeList" resultType="com.healthplan.work.vo.SubscribeVO">
+
+		SELECT
+			  SNO
+			, MNO
+			, UUID
+			, STYPE
+			, TITLE
+			, CONTENTS
+			, TO_CHAR(WDATE, 'YYYY-MM-DD') AS WDATE
+			, COUNTS
+			, FILEID
+			, REPLYCNT
+			, (SELECT FILENAME FROM SATTACHED WHERE IMGTYPE = 'M' AND SNO = S.SNO) AS TITLEIMG
+			, SPOINT
+			FROM  SUBSCRIBE S
+			WHERE 1=1
+			AND STYPE = 'T'
+
+
+
+		ORDER BY SNO DESC
+
+	</select>
+
+</mapper>
