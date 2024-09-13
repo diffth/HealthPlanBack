@@ -8,4 +8,51 @@
 		select * from point
 	</select>
 
+	<!-- 뉴스 상세 -->
+	<select id="selectRead" resultType="com.healthplan.work.vo.NewsEntity">
+		select * from point where pno = #{pno}
+	</select>
+
+	<!-- 강의 목록 테스트 -->
+	<select id="listSub" resultType="com.healthplan.work.vo.SubscribeVO">
+
+		SELECT *
+		FROM
+		(
+			SELECT
+			  ROWNUM AS RNUM
+			, SNO
+			, MNO
+			, UUID
+			, STYPE
+			, TITLE
+			, CONTENTS
+			, TO_CHAR(WDATE, 'YYYY-MM-DD') AS WDATE
+			, COUNTS
+			, FILEID
+			, REPLYCNT
+			, (SELECT FILENAME FROM SATTACHED WHERE IMGTYPE = 'M' AND SNO = S.SNO) AS TITLEIMG
+			, SPOINT
+			FROM  SUBSCRIBE S
+			WHERE 1=1
+			AND STYPE = 'L'
+
+
+			ORDER BY SNO DESC
+		)
+<!--		WHERE RNUM BETWEEN #{startPage} AND #{endPage}-->
+		ORDER BY RNUM
+
+	</select>
+
+	<select id="selectCount" resultType="int">
+
+		SELECT
+			  COUNT(*)
+		FROM  SUBSCRIBE
+		WHERE 1=1
+		AND STYPE = 'L'
+
+	</select>
+
 </mapper>

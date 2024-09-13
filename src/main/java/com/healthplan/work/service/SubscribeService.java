@@ -1,6 +1,7 @@
 package com.healthplan.work.service;
 
 import com.healthplan.work.dao.SubscribeMapper;
+import com.healthplan.work.vo.SearchCriteria;
 import com.healthplan.work.vo.SubscribeVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,27 +15,30 @@ public class SubscribeService {
     private SubscribeMapper subscribeMapper;
 
     public List<SubscribeVO> selectSubscribeList() throws Exception {
-
         return subscribeMapper.selectSubscribeList();
     }
 
     public SubscribeVO selectSubscribeRead(int sno) throws Exception {
-
         return subscribeMapper.selectSubscribeRead(sno);
     }
 
     public void subscribeInsert(SubscribeVO vo) throws Exception {
-
         subscribeMapper.insertSubscribe(vo);
     }
 
     public void subscribeUpdate(SubscribeVO vo) throws Exception {
-
         subscribeMapper.updateSubscribe(vo);
     }
 
     public void subscribeDelete(int sno) throws Exception {
-
         subscribeMapper.deleteSubscribe(sno);
+    }
+
+    public List<SubscribeVO> selectSubscribeLessionList(SearchCriteria cri) throws Exception {
+        return subscribeMapper.selectSubscribeLessionList(cri);
+    }
+
+    public int selectSubscribeLessionCount(SearchCriteria cri) throws Exception {
+        return subscribeMapper.selectSubscribeLessionCount(cri);
     }
 }

@@ -9,9 +9,10 @@ public class CorsConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins("http://localhost:3000") // 허용할 Origin 설정
-                .allowedMethods("GET", "POST", "PUT", "DELETE");
+        registry.addMapping("/**").allowedOrigins("*")
+                .allowedMethods("HEAD", "GET", "POST", "PUT", "DELETE", "OPTIONS")
+                .maxAge(300)
+                .allowedHeaders("Authorization", "Cache-Control", "Content-Type");
     }
 }
 

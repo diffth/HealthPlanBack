@@ -3,11 +3,12 @@
 
 <mapper namespace="com.healthplan.work.dao.SubscribeMapper">
 
-	<!-- 구독 목록 -->
+	<!-- 전문가구독 list -->
 	<select id="selectSubscribeList" resultType="com.healthplan.work.vo.SubscribeVO">
 
 		SELECT
-			  SNO
+			  ROWNUM AS RNUM
+			, SNO
 			, MNO
 			, UUID
 			, STYPE
@@ -93,5 +94,68 @@
 		DELETE FROM SUBSCRIBE WHERE SNO = #{sno}
 
 	</delete>
+
+
+	<!-- 강의 list -->
+	<select id="selectSubscribeLessionList" resultType="com.healthplan.work.vo.SubscribeVO">
+
+		SELECT *
+		FROM
+		(
+			SELECT
+			  ROWNUM AS RNUM
+			, SNO
+			, MNO
+			, UUID
+			, STYPE
+			, TITLE
+			, CONTENTS
+			, TO_CHAR(WDATE, 'YYYY-MM-DD') AS WDATE
+			, COUNTS
+			, FILEID
+			, REPLYCNT
+			, (SELECT FILENAME FROM SATTACHED WHERE IMGTYPE = 'M' AND SNO = S.SNO) AS TITLEIMG
+			, SPOINT
+			FROM  SUBSCRIBE S
+			WHERE 1=1
+			AND STYPE = 'L'
+
+			<include refid="search"></include>
+
+			ORDER BY SNO DESC
+		)
+		WHERE RNUM BETWEEN #{pageStart} AND #{pageEnd}
+		ORDER BY RNUM
+
+	</select>
+
+	<!-- 강의 list count -->
+	<select id="selectSubscribeLessionCount" resultType="int">
+
+		SELECT
+			  COUNT(*)
+		FROM  SUBSCRIBE
+		WHERE 1=1
+		AND STYPE = 'L'
+
+		<include refid="search"></include>
+
+	</select>
+
+	<!-- 통합 list Search -->
+	<sql id="search">
+		<if test="searchType != null and searchType != ''">
+			<if test="searchType == 'total'">
+				AND (
+				TITLE LIKE '%'||#{keyword}||'%'
+				OR CONTENTS LIKE '%'||#{keyword}||'%'
+				OR UUID LIKE '%'||#{keyword}||'%'
+				)
+			</if>
+			<if test="searchType != 'total'">
+				AND ${searchType} LIKE '%'||#{keyword}||'%'
+			</if>
+		</if>
+	</sql>
 
 </mapper>
