@@ -1,5 +1,6 @@
 package com.healthplan.work.dao;
 
+import com.healthplan.work.vo.Criteria;
 import com.healthplan.work.vo.NewsEntity;
 import com.healthplan.work.vo.PageRequestDTO;
 import com.healthplan.work.vo.SubscribeVO;
@@ -17,4 +18,6 @@ public interface NewsMapper {
 	public List<SubscribeVO> listSub(PageRequestDTO pageDto);
 
 	int selectCount();
+
+	List<SubscribeVO> subList(Criteria cri);
 }

@@ -22,8 +22,6 @@ import java.util.Map;
 @RequestMapping("/api")
 public class NewsController {
 
-//	private Logger logger = LoggerFactory.getLogger(this.getClass());
-
 	@Autowired
 	private NewsService newsService;
 
@@ -59,9 +57,22 @@ public class NewsController {
 //		return newsService.selectSList(pageRequestDTO);
 //	}
 
+//	@GetMapping("/slist")
+//	public PageResponseDTO<SubscribeVO> slist(PageRequestDTO pageRequestDTO, SearchCriteria cri) {
+//		log.info("/api/pageRequestDTO --------------> " + pageRequestDTO);
+//		log.info("/api/cri --------------> " + cri);
+//
+//		//PageMaker pageMaker = new PageMaker();
+//		//pageRequestDTO.setCri(cri);
+//		//pageRequestDTO.setTotalCount(newsService.selectSubscribeLessionCount());
+//		//pageRequestDTO.makeSearch(pageRequestDTO.getPage());
+//		//List<SubscribeVO> dtoList = newsService.selectSList(pageRequestDTO);
+//		return newsService.selectSList(pageRequestDTO);
+//	}
+
 	@GetMapping("/slist")
-	public PageResponseDTO<SubscribeVO> slist(PageRequestDTO pageRequestDTO, SearchCriteria cri) {
-		log.info("/api/pageRequestDTO --------------> " + pageRequestDTO);
+	public Map<String, Object> slist(SearchCriteria cri) {
+		Map<String, Object> result = new HashMap<>();
 		log.info("/api/cri --------------> " + cri);
 
 		//PageMaker pageMaker = new PageMaker();
@@ -69,7 +80,11 @@ public class NewsController {
 		//pageRequestDTO.setTotalCount(newsService.selectSubscribeLessionCount());
 		//pageRequestDTO.makeSearch(pageRequestDTO.getPage());
 		//List<SubscribeVO> dtoList = newsService.selectSList(pageRequestDTO);
-		return newsService.selectSList(pageRequestDTO);
+
+		List<SubscribeVO> list = newsService.selectSubList(cri);
+
+		result.put("list", list);
+		return result;
 	}
 
 	@GetMapping("/{pno}")

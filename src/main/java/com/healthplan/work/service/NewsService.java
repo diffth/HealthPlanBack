@@ -1,10 +1,7 @@
 package com.healthplan.work.service;
 
 import com.healthplan.work.dao.NewsMapper;
-import com.healthplan.work.vo.NewsEntity;
-import com.healthplan.work.vo.PageRequestDTO;
-import com.healthplan.work.vo.PageResponseDTO;
-import com.healthplan.work.vo.SubscribeVO;
+import com.healthplan.work.vo.*;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -67,5 +64,10 @@ public class NewsService {
 
     public int selectSubscribeLessionCount() {
         return newsMapper.selectCount();
+    }
+
+    public List<SubscribeVO> selectSubList(Criteria cri) {
+
+        return newsMapper.subList(cri);
     }
 }

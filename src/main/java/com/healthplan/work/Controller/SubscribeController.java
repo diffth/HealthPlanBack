@@ -4,8 +4,7 @@ import com.healthplan.work.service.SubscribeService;
 import com.healthplan.work.vo.PageMaker;
 import com.healthplan.work.vo.SearchCriteria;
 import com.healthplan.work.vo.SubscribeVO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,16 +12,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 /**
  * SubscribeController : 구독 > 구독정보 / 전문가구독 / 강의수강
  * The type Subscribe controller.
  */
 @RestController
+@Log4j2
 @RequestMapping("/subscribe")
 public class SubscribeController {
-
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private SubscribeService subscribeService;
@@ -49,7 +46,7 @@ public class SubscribeController {
         Map<String, Object> result = new HashMap<>();
 
         List<SubscribeVO> list = subscribeService.selectSubscribeList();
-        logger.info("subscribeList -> " + list.toString());
+        log.info("subscribeList -> " + list.toString());
 
         result.put("slist", list);
         return result;
@@ -65,7 +62,7 @@ public class SubscribeController {
     @PostMapping("/subscribeInsert")
     public String insert(SubscribeVO subscribeVO) throws Exception {
         subscribeService.subscribeInsert(subscribeVO);
-        logger.info("subscribeInsert -> " + subscribeVO.toString());
+        log.info("subscribeInsert -> " + subscribeVO.toString());
 
         return "redirect:/subscribe/subscribeList";
     }
@@ -81,7 +78,7 @@ public class SubscribeController {
     public Map<String, Object> read(@PathVariable("sno") int sno) throws Exception {
         Map<String, Object> result = new HashMap<>();
         SubscribeVO vo = subscribeService.selectSubscribeRead(sno);
-        logger.info("subscribeRead -> " + vo.toString());
+        log.info("subscribeRead -> " + vo.toString());
 
         result.put("vo", vo);
         return result;
@@ -97,7 +94,7 @@ public class SubscribeController {
     @PutMapping("/subscribeUpdate")
     public String update(SubscribeVO subscribeVO) throws Exception {
         subscribeService.subscribeUpdate(subscribeVO);
-        logger.info("subscribeUpdate -> " + subscribeVO.toString());
+        log.info("subscribeUpdate -> " + subscribeVO.toString());
 
         return "redirect:/subscribe/subscribeList";
     }
@@ -112,7 +109,7 @@ public class SubscribeController {
     @DeleteMapping("/subscribeDelete/{sno}")
     public String delete(@PathVariable("sno") int sno) throws Exception {
         subscribeService.subscribeDelete(sno);
-        logger.info("subscribeDelete -> " + sno);
+        log.info("subscribeDelete -> " + sno);
 
         return "redirect:/subscribe/subscribeList";
     }
@@ -132,9 +129,9 @@ public class SubscribeController {
         pageMaker.setCri(cri);
         pageMaker.setTotalCount(subscribeService.selectSubscribeLessionCount(cri));
         pageMaker.makeSearch(3);
-        logger.info("subscribeLessionList -> " + list.toString());
-        logger.info("cri -> " + cri.toString());
-        logger.info("page -> " + num);
+        log.info("subscribeLessionList -> " + list.toString());
+        log.info("cri -> " + cri.toString());
+        log.info("page -> " + num);
 
         result.put("llist", list);
         result.put("pageMaker", pageMaker);
