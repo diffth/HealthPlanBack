@@ -133,7 +133,7 @@ public class SubscribeController {
         log.info("cri -> " + cri.toString());
         log.info("page -> " + num);
 
-        result.put("llist", list);
+        result.put("list", list);
         result.put("pageMaker", pageMaker);
         return result;
     }

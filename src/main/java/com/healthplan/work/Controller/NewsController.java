@@ -27,13 +27,13 @@ public class NewsController {
 
 	@GetMapping("/news")
 	public Map<String, Object> news() throws Exception {
-		Map<String, Object> rtnObj = new HashMap<>();
+		Map<String, Object> result = new HashMap<>();
 
-		List<NewsEntity> newsList = newsService.selectList();
-		log.info("news-> " + newsList.toString());
+		List<NewsEntity> newslist = newsService.selectList();
+		result.put("newslist", newslist);
+		log.info("result-> " + result.toString());
 
-		rtnObj.put("newslist", newsList);
-		return rtnObj;
+		return result;
 	}
 
 	@GetMapping("/hello")
@@ -73,7 +73,6 @@ public class NewsController {
 	@GetMapping("/slist")
 	public Map<String, Object> slist(SearchCriteria cri) {
 		Map<String, Object> result = new HashMap<>();
-		log.info("/api/cri --------------> " + cri);
 
 		//PageMaker pageMaker = new PageMaker();
 		//pageRequestDTO.setCri(cri);
@@ -81,9 +80,10 @@ public class NewsController {
 		//pageRequestDTO.makeSearch(pageRequestDTO.getPage());
 		//List<SubscribeVO> dtoList = newsService.selectSList(pageRequestDTO);
 
-		List<SubscribeVO> list = newsService.selectSubList(cri);
-
-		result.put("list", list);
+		List<SubscribeVO> slist = newsService.selectSubList(cri);
+		result.put("slist", slist);
+		log.info("cri	-> " + cri);
+		log.info("result-> " + result.toString());
 		return result;
 	}
 

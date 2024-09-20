@@ -68,6 +68,7 @@
 			WHERE 1=1
 			AND STYPE = 'L'
 
+			<include refid="search"></include>
 
 			ORDER BY SNO DESC
 		)
@@ -85,5 +86,22 @@
 		AND STYPE = 'L'
 
 	</select>
+
+
+	<!-- 통합 list Search -->
+	<sql id="search">
+		<if test="searchType != null and searchType != ''">
+			<if test="searchType == 'total'">
+				AND (
+				TITLE LIKE '%'||#{keyword}||'%'
+				OR CONTENTS LIKE '%'||#{keyword}||'%'
+				OR UUID LIKE '%'||#{keyword}||'%'
+				)
+			</if>
+			<if test="searchType != 'total'">
+				AND ${searchType} LIKE '%'||#{keyword}||'%'
+			</if>
+		</if>
+	</sql>
 
 </mapper>
