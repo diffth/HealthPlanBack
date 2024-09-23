@@ -49,21 +49,21 @@ public class NewsService {
     }
 
 
-    public PageResponseDTO<SubscribeVO> selectSList(PageRequestDTO pageRequestDTO) {
+//    public PageResponseDTO<SubscribeVO> selectSList(PageRequestDTO pageRequestDTO) {
+//
+//        List<SubscribeVO> dtoList = newsMapper.listSub(pageRequestDTO);
+//        log.info("==================> " + dtoList.toString());
+//        PageResponseDTO<SubscribeVO> responseDTO = PageResponseDTO.<SubscribeVO>withAll()
+//                .dtoList(dtoList)
+//                .pageRequestDTO(pageRequestDTO)
+//                .totalCount(newsMapper.selectCount())
+//                .build();
+//
+//        return responseDTO;
+//    }
 
-        List<SubscribeVO> dtoList = newsMapper.listSub(pageRequestDTO);
-        log.info("==================> " + dtoList.toString());
-        PageResponseDTO<SubscribeVO> responseDTO = PageResponseDTO.<SubscribeVO>withAll()
-                .dtoList(dtoList)
-                .pageRequestDTO(pageRequestDTO)
-                .totalCount(newsMapper.selectCount())
-                .build();
-
-        return responseDTO;
-    }
-
-    public int selectSubscribeLessionCount() {
-        return newsMapper.selectCount();
+    public int selectSubscribeLessionCount(Criteria cri) {
+        return newsMapper.selectCount(cri);
     }
 
     public List<SubscribeVO> selectSubList(Criteria cri) {

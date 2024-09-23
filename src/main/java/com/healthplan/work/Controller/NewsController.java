@@ -74,16 +74,20 @@ public class NewsController {
 	public Map<String, Object> slist(SearchCriteria cri) {
 		Map<String, Object> result = new HashMap<>();
 
-		//PageMaker pageMaker = new PageMaker();
-		//pageRequestDTO.setCri(cri);
-		//pageRequestDTO.setTotalCount(newsService.selectSubscribeLessionCount());
-		//pageRequestDTO.makeSearch(pageRequestDTO.getPage());
-		//List<SubscribeVO> dtoList = newsService.selectSList(pageRequestDTO);
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(newsService.selectSubscribeLessionCount(cri));
 
 		List<SubscribeVO> slist = newsService.selectSubList(cri);
 		result.put("slist", slist);
+		result.put("pageMaker", pageMaker);
 		log.info("cri	-> " + cri);
 		log.info("result-> " + result.toString());
+		log.info("pageMaker-> getTotalCount() : " + pageMaker.getTotalCount());
+		log.info("pageMaker-> getStartPage()  : " + pageMaker.getStartPage());
+		log.info("pageMaker-> getEndPage()    : " + pageMaker.getEndPage());
+		log.info("pageMaker-> isNext()        : " + pageMaker.isNext());
+		log.info("pageMaker-> isPrev()        : " + pageMaker.isPrev());
 		return result;
 	}
 

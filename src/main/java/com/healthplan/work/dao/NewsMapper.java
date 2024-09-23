@@ -17,7 +17,7 @@ public interface NewsMapper {
 
 	public List<SubscribeVO> listSub(PageRequestDTO pageDto);
 
-	int selectCount();
+	public int selectCount(Criteria cri);
 
 	List<SubscribeVO> subList(Criteria cri);
 }

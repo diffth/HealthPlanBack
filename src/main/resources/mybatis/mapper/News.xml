@@ -72,7 +72,8 @@
 
 			ORDER BY SNO DESC
 		)
-<!--		WHERE RNUM BETWEEN #{startPage} AND #{endPage}-->
+		WHERE RNUM BETWEEN #{pageStart} AND #{pageEnd}
+<!--		BETWEEN #{pageStart} + 1 AND (#{pageStart} + #{perPageNum})-->
 		ORDER BY RNUM
 
 	</select>
@@ -84,6 +85,8 @@
 		FROM  SUBSCRIBE
 		WHERE 1=1
 		AND STYPE = 'L'
+
+		<include refid="search"></include>
 
 	</select>
 
