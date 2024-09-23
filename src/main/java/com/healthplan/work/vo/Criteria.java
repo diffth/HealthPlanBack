@@ -3,6 +3,8 @@ package com.healthplan.work.vo;
 public class Criteria {
 
     private int page;
+    
+    // 한 페이지에 보여줄 list 갯수
     private int perPageNum;
 
     private String pageStart;
@@ -10,7 +12,7 @@ public class Criteria {
 
     public Criteria() {
         this.page = 1;
-        this.perPageNum = 5;
+        this.perPageNum = 10;
     }
 
     public void setPage(int page) {

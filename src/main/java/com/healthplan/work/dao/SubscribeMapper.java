@@ -22,4 +22,8 @@ public interface SubscribeMapper {
     public List<SubscribeVO> selectSubscribeLessionList(SearchCriteria cri) throws Exception;
 
     public int selectSubscribeLessionCount(SearchCriteria cri) throws Exception;
+
+    public void insertSubscribeLession(SubscribeVO vo) throws Exception;
+
+    public void updateSubscribeLession(SubscribeVO vo) throws Exception;
 }

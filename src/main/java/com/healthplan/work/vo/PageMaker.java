@@ -11,6 +11,7 @@ public class PageMaker {
     private boolean prev;
     private boolean next;
 
+    // 한 페이지에 보여줄 페이지 갯수
     private int displayPageNum = 5;
 
     private Criteria cri;

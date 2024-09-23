@@ -41,4 +41,12 @@ public class SubscribeService {
     public int selectSubscribeLessionCount(SearchCriteria cri) throws Exception {
         return subscribeMapper.selectSubscribeLessionCount(cri);
     }
+
+    public void subscribeLessionInsert(SubscribeVO vo) throws Exception {
+        subscribeMapper.insertSubscribeLession(vo);
+    }
+
+    public void selectSubscribeUpdate(SubscribeVO vo) throws Exception {
+        subscribeMapper.updateSubscribeLession(vo);
+    }
 }

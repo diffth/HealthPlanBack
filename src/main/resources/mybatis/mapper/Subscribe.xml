@@ -76,8 +76,50 @@
 
 	</insert>
 
-	<!-- 구독 등록 -->
+
+	<!-- 강의 등록 -->
+	<insert id="insertSubscribeLession" parameterType="com.healthplan.work.vo.SubscribeVO">
+
+		INSERT INTO SUBSCRIBE(
+			  SNO
+			, MNO
+			, UUID
+			, STYPE
+			, TITLE
+			, CONTENTS
+			, SPOINT
+			, WDATE
+			) VALUES (
+			SNO_SEQ.NEXTVAL
+			, #{mno}
+			, #{uuid}
+			, 'L'
+			, #{title}
+			, #{contents}
+			, #{spoint}
+			, SYSDATE
+		)
+
+		<selectKey keyProperty="sno" resultType="int" order="AFTER">
+			SELECT SNO_SEQ.CURRVAL FROM DUAL
+		</selectKey>
+
+	</insert>
+
+	<!-- 구독 수정 -->
 	<update id="updateSubscribe">
+
+		UPDATE SUBSCRIBE
+		SET
+			  TITLE		= #{title}
+			, CONTENTS	= #{contents}
+			, SPOINT	= #{spoint}
+		WHERE SNO 		= #{sno}
+
+	</update>
+
+	<!-- 강의 수정 -->
+	<update id="updateSubscribeLession">
 
 		UPDATE SUBSCRIBE
 		SET

@@ -113,28 +113,101 @@ public class SubscribeController {
 
         return "redirect:/subscribe/subscribeList";
     }
-    
+
     /*****************************************************************************************************************
      * subscribeLessionList : 강의수강 list
      *
+     * @param cri the cri
      * @return the map
      * @throws Exception the exception
      */
     @GetMapping("/subscribeLessionList")
-    public Map<String, Object> lessionList(@RequestParam(value = "num", required = false) String num, SearchCriteria cri) throws Exception {
+    public Map<String, Object> lessionList(SearchCriteria cri) throws Exception {
         Map<String, Object> result = new HashMap<>();
-        List<SubscribeVO> list = subscribeService.selectSubscribeLessionList(cri);
 
         PageMaker pageMaker = new PageMaker();
         pageMaker.setCri(cri);
         pageMaker.setTotalCount(subscribeService.selectSubscribeLessionCount(cri));
-        pageMaker.makeSearch(3);
-        log.info("subscribeLessionList -> " + list.toString());
-        log.info("cri -> " + cri.toString());
-        log.info("page -> " + num);
 
+        List<SubscribeVO> list = subscribeService.selectSubscribeLessionList(cri);
         result.put("list", list);
         result.put("pageMaker", pageMaker);
+
+        log.info("cri	-> " + cri);
+        log.info("subscribeLessionList result-> " + result.toString());
         return result;
+    }
+
+    /**
+     * subscribeLessionInsert : 강의등록
+     * Lession insert string.
+     *
+     * @param subscribeVO the subscribe vo
+     * @return the string
+     * @throws Exception the exception
+     */
+    @PostMapping("/subscribeLessionInsert")
+    public String lessionInsert(SubscribeVO subscribeVO) throws Exception {
+        log.info("subscribeInsert -> " + subscribeVO);
+        subscribeService.subscribeLessionInsert(subscribeVO);
+
+        return "success";
+    }
+
+    /**
+     * subscribeLessionRead : 강의상세
+     * Lession read subscribe vo.
+     *
+     * @param sno the sno
+     * @return the subscribe vo
+     * @throws Exception the exception
+     */
+    @GetMapping("/subscribeLessionRead/{sno}")
+    public SubscribeVO lessionRead(@PathVariable("sno") int sno) throws Exception {
+        SubscribeVO vo = subscribeService.selectSubscribeRead(sno);
+
+        log.info("sno -> " + sno);
+        log.info("subscribeLessionRead result -> " + vo.toString());
+
+        //이미지 정보 가져오기
+        //List<SubscribeVO> imageDTOList = getImageDTOList(bNo);
+        return vo;
+    }
+
+    /**
+     * subscribeLessionRead : 강의수정
+     * Lession update subscribe vo.
+     *
+     * @param subscribeVO the subscribe vo
+     * @return the subscribe vo
+     * @throws Exception the exception
+     */
+    @PostMapping("/subscribeLessionUpdate/{sno}")
+    public String lessionUpdate(SubscribeVO subscribeVO) throws Exception {
+        subscribeService.selectSubscribeUpdate(subscribeVO);
+
+        log.info("subscribeVO -> " + subscribeVO);
+//        log.info("subscribeLessionRead result -> " + vo.toString());
+
+        //이미지 정보 가져오기
+        //List<SubscribeVO> imageDTOList = getImageDTOList(bNo);
+
+        return "success";
+    }
+
+    /**
+     * subscribeLessionDelete : 강의삭제
+     * Lession delete string.
+     *
+     * @param sno the sno
+     * @return the string
+     * @throws Exception the exception
+     */
+    @DeleteMapping("/subscribeLessionDelete/{sno}")
+    public String lessionDelete(@PathVariable("sno") int sno) throws Exception {
+        subscribeService.subscribeDelete(sno);
+        log.info("subscribeDelete -> " + sno);
+
+        return "redirect:/subscribe/subscribeLessionList";
     }
 }
