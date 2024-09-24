@@ -138,6 +138,14 @@
 	</delete>
 
 
+	<!-- 강의 삭제 -->
+	<delete id="deleteSubscribeLession">
+
+		DELETE FROM SUBSCRIBE WHERE SNO = #{sno}
+
+	</delete>
+
+
 	<!-- 강의 list -->
 	<select id="selectSubscribeLessionList" resultType="com.healthplan.work.vo.SubscribeVO">
 
@@ -183,6 +191,16 @@
 		<include refid="search"></include>
 
 	</select>
+
+	<!-- 강의 조회수 -->
+	<update id="updateSubscribeLessionCount">
+
+		UPDATE SUBSCRIBE
+		SET
+			  COUNTS = COUNTS + 1
+		WHERE SNO = #{sno}
+
+	</update>
 
 	<!-- 통합 list Search -->
 	<sql id="search">

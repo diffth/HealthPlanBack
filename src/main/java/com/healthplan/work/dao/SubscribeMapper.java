@@ -26,4 +26,8 @@ public interface SubscribeMapper {
     public void insertSubscribeLession(SubscribeVO vo) throws Exception;
 
     public void updateSubscribeLession(SubscribeVO vo) throws Exception;
+
+    public void deleteSubscribeLession(int sno) throws Exception;
+
+    void updateSubscribeLessionCount(int sno) throws Exception;
 }

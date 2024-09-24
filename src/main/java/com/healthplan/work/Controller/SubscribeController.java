@@ -25,17 +25,6 @@ public class SubscribeController {
     private SubscribeService subscribeService;
 
     /*****************************************************************************************************************
-     * Index string.
-     *
-     * @return the string
-     */
-    @GetMapping("/")
-    public String index() {
-        return "redirect:/subscribe/subscribeList";
-    }
-
-
-    /*****************************************************************************************************************
      * subscribeList : 전문가구독 list
      *
      * @return the map
@@ -48,7 +37,7 @@ public class SubscribeController {
         List<SubscribeVO> list = subscribeService.selectSubscribeList();
         log.info("subscribeList -> " + list.toString());
 
-        result.put("slist", list);
+        result.put("list", list);
         return result;
     }
 
@@ -115,7 +104,7 @@ public class SubscribeController {
     }
 
     /*****************************************************************************************************************
-     * subscribeLessionList : 강의수강 list
+     * subscribeLessionList : 강의수강 select list
      *
      * @param cri the cri
      * @return the map
@@ -124,6 +113,11 @@ public class SubscribeController {
     @GetMapping("/subscribeLessionList")
     public Map<String, Object> lessionList(SearchCriteria cri) throws Exception {
         Map<String, Object> result = new HashMap<>();
+
+        //전체검색 onchange x
+        if ("".equals(cri.getSearchType())) {
+            cri.setSearchType("total");
+        }
 
         PageMaker pageMaker = new PageMaker();
         pageMaker.setCri(cri);
@@ -139,7 +133,7 @@ public class SubscribeController {
     }
 
     /**
-     * subscribeLessionInsert : 강의등록
+     * subscribeLessionInsert : 강의등록 insert
      * Lession insert string.
      *
      * @param subscribeVO the subscribe vo
@@ -155,7 +149,7 @@ public class SubscribeController {
     }
 
     /**
-     * subscribeLessionRead : 강의상세
+     * subscribeLessionRead : 강의상세 select one
      * Lession read subscribe vo.
      *
      * @param sno the sno
@@ -175,19 +169,18 @@ public class SubscribeController {
     }
 
     /**
-     * subscribeLessionRead : 강의수정
+     * subscribeLessionRead : 강의수정 update one
      * Lession update subscribe vo.
      *
      * @param subscribeVO the subscribe vo
      * @return the subscribe vo
      * @throws Exception the exception
      */
-    @PostMapping("/subscribeLessionUpdate/{sno}")
+    @PutMapping("/subscribeLessionUpdate")
     public String lessionUpdate(SubscribeVO subscribeVO) throws Exception {
-        subscribeService.selectSubscribeUpdate(subscribeVO);
 
         log.info("subscribeVO -> " + subscribeVO);
-//        log.info("subscribeLessionRead result -> " + vo.toString());
+        subscribeService.selectSubscribeUpdate(subscribeVO);
 
         //이미지 정보 가져오기
         //List<SubscribeVO> imageDTOList = getImageDTOList(bNo);
@@ -196,7 +189,7 @@ public class SubscribeController {
     }
 
     /**
-     * subscribeLessionDelete : 강의삭제
+     * subscribeLessionDelete : 강의삭제 delete
      * Lession delete string.
      *
      * @param sno the sno
@@ -205,9 +198,10 @@ public class SubscribeController {
      */
     @DeleteMapping("/subscribeLessionDelete/{sno}")
     public String lessionDelete(@PathVariable("sno") int sno) throws Exception {
-        subscribeService.subscribeDelete(sno);
-        log.info("subscribeDelete -> " + sno);
 
-        return "redirect:/subscribe/subscribeLessionList";
+        log.info("subscribeDelete -> " + sno);
+        subscribeService.subscribeLessionDelete(sno);
+
+        return "success";
     }
 }

@@ -19,6 +19,7 @@ public class SubscribeService {
     }
 
     public SubscribeVO selectSubscribeRead(int sno) throws Exception {
+        subscribeMapper.updateSubscribeLessionCount(sno);
         return subscribeMapper.selectSubscribeRead(sno);
     }
 
@@ -48,5 +49,9 @@ public class SubscribeService {
 
     public void selectSubscribeUpdate(SubscribeVO vo) throws Exception {
         subscribeMapper.updateSubscribeLession(vo);
+    }
+
+    public void subscribeLessionDelete(int sno) throws Exception {
+        subscribeMapper.deleteSubscribeLession(sno);
     }
 }
