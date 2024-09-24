@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/sreplies")
 public class SReplyController {
 
-//    @Autowired
-//    private SReplyService sreplyService;
+    @Autowired
+    private SReplyService sreplyService;
 
 }
