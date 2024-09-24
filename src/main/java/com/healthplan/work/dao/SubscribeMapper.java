@@ -1,5 +1,6 @@
 package com.healthplan.work.dao;
 
+import com.healthplan.work.vo.SReplyVO;
 import com.healthplan.work.vo.SearchCriteria;
 import com.healthplan.work.vo.SubscribeVO;
 import org.apache.ibatis.annotations.Mapper;
@@ -29,5 +30,7 @@ public interface SubscribeMapper {
 
     public void deleteSubscribeLession(int sno) throws Exception;
 
-    void updateSubscribeLessionCount(int sno) throws Exception;
+    public void updateSubscribeLessionCount(int sno) throws Exception;
+
+    public void updateReplyCnt(SReplyVO vo) throws Exception;
 }

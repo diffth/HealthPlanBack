@@ -202,6 +202,17 @@
 
 	</update>
 
+	<!-- 댓글수 -->
+	<update id="updateReplyCnt">
+
+		UPDATE SUBSCRIBE
+		SET
+			REPLYCNT = (SELECT MAX(REPLYCNT) + 1 FROM SUBSCRIBE WHERE SNO = #{sno})
+		WHERE SNO 	 = #{sno}
+
+	</update>
+
+
 	<!-- 통합 list Search -->
 	<sql id="search">
 		<if test="searchType != null and searchType != ''">

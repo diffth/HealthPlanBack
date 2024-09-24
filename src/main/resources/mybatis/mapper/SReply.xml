@@ -3,5 +3,48 @@
 
 <mapper namespace="com.healthplan.work.dao.SReplyMapper">
 
+    <!-- 댓글 등록 -->
+    <insert id="addReply" parameterType="com.healthplan.work.vo.SReplyVO">
+
+        INSERT INTO SREPLY (
+              RNO
+            , MNO
+            , SNO
+            , RCOMMENT
+            , RREGDATE
+            ) VALUES (
+              RNO_SEQ.NEXTVAL
+            , #{mno}
+            , #{sno}
+            , #{rcomment}
+            , SYSDATE
+        )
+
+    </insert>
+
+    <!-- 댓글 list -->
+    <select id="listReply" resultType="com.healthplan.work.vo.SReplyVO">
+
+        SELECT *
+        FROM
+        (
+            SELECT
+                  ROWNUM AS RNUM
+                , RNO
+                , MNO
+                , SNO
+                , RCOMMENT
+                , RREGDATE
+                , UREGDATE
+            FROM  SREPLY
+            WHERE 1=1
+              AND SNO = #{sno}
+            ORDER BY RNO DESC
+        )
+<!--        WHERE RNUM BETWEEN #{cri.pageStart} AND #{cri.pageEnd}-->
+        ORDER BY RNUM DESC
+
+    </select>
+
 
 </mapper>
