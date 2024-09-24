@@ -3,6 +3,7 @@ package com.healthplan.work.Controller;
 import com.healthplan.work.service.SReplyService;
 import com.healthplan.work.vo.SReplyVO;
 import lombok.extern.log4j.Log4j2;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ public class SReplyController {
     private SReplyService sreplyService;
 
     @PostMapping("/add")
-    public ResponseEntity<String> insert(@RequestBody SReplyVO vo) throws Exception {
+    public ResponseEntity<String> insert(@RequestBody @NotNull SReplyVO vo) throws Exception {
         ResponseEntity<String> entity = null;
 
         log.info("add -> " + vo.toString());
@@ -41,10 +42,7 @@ public class SReplyController {
     @GetMapping("/list/{sno}")
     public ResponseEntity<List<SReplyVO>> list(@PathVariable("sno") int sno) throws Exception {
         ResponseEntity<List<SReplyVO>> entity = null;
-
-        List<SReplyVO> list = sreplyService.listReply(sno);
         log.info("sno -> " + sno);
-        log.info("list -> " + list.toString());
 
         try {
             entity = new ResponseEntity<>(sreplyService.listReply(sno), HttpStatus.OK);
