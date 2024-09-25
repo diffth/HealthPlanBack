@@ -5,6 +5,7 @@ import com.healthplan.work.vo.PageMaker;
 import com.healthplan.work.vo.SearchCriteria;
 import com.healthplan.work.vo.SubscribeVO;
 import lombok.extern.log4j.Log4j2;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -111,7 +112,7 @@ public class SubscribeController {
      * @throws Exception the exception
      */
     @GetMapping("/subscribeLessionList")
-    public Map<String, Object> lessionList(SearchCriteria cri) throws Exception {
+    public Map<String, Object> lessionList(@NotNull SearchCriteria cri) throws Exception {
         Map<String, Object> result = new HashMap<>();
 
         //전체검색 onchange x
