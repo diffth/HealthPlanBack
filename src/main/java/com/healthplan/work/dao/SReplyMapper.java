@@ -12,5 +12,9 @@ public interface SReplyMapper {
 
     public List<SReplyVO> listReply(int sno) throws Exception;
 
+    public void updateReply(SReplyVO vo) throws Exception;
 
+    public int getSno(int rno) throws Exception;
+
+    public void deleteReply(int rno) throws Exception;
 }

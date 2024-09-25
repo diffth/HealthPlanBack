@@ -202,12 +202,23 @@
 
 	</update>
 
-	<!-- 댓글수 -->
+	<!-- 댓글수 더하기 -->
 	<update id="updateReplyCnt">
 
 		UPDATE SUBSCRIBE
 		SET
 			REPLYCNT = (SELECT MAX(REPLYCNT) + 1 FROM SUBSCRIBE WHERE SNO = #{sno})
+		WHERE SNO 	 = #{sno}
+
+	</update>
+
+
+	<!-- 댓글수 빼기 -->
+	<update id="updateReplyCntSubtraction">
+
+		UPDATE SUBSCRIBE
+		SET
+			REPLYCNT = (SELECT MAX(REPLYCNT) - 1 FROM SUBSCRIBE WHERE SNO = #{sno})
 		WHERE SNO 	 = #{sno}
 
 	</update>

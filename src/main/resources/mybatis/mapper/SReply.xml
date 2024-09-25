@@ -46,5 +46,30 @@
 
     </select>
 
+    <!-- 댓글 수정 -->
+    <update id="updateReply">
+
+        UPDATE SREPLY
+        SET
+            RCOMMENT = #{rcomment},
+            UREGDATE = SYSDATE
+        WHERE RNO    = #{rno}
+
+    </update>
+
+    <!-- SNO select -->
+    <select id="getSno" resultType="int">
+
+        SELECT SNO FROM SREPLY WHERE RNO = #{rno}
+
+    </select>
+
+    <!-- 댓글 삭제 -->
+    <delete id="deleteReply">
+
+        DELETE FROM SREPLY WHERE RNO = #{rno}
+
+    </delete>
+
 
 </mapper>

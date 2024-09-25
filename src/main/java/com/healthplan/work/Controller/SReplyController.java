@@ -23,12 +23,43 @@ public class SReplyController {
     @Autowired
     private SReplyService sreplyService;
 
+    /*****************************************************************************************************************
+     * sReplyList : 구독/강의 댓글 select list
+     *
+     * List response entity.
+     *
+     * @param sno the sno
+     * @return the response entity
+     * @throws Exception the exception
+     */
+    @GetMapping("/list/{sno}")
+    public ResponseEntity<List<SReplyVO>> list(@PathVariable("sno") int sno) throws Exception {
+        log.info("sno -> " + sno);
+
+        ResponseEntity<List<SReplyVO>> entity = null;
+        try {
+            entity = new ResponseEntity<>(sreplyService.listReply(sno), HttpStatus.OK);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return entity;
+    }
+
+    /**
+     * sReplyInsert : 구독/강의 댓글등록 insert
+     * Insert response entity.
+     *
+     * @param vo the vo
+     * @return the response entity
+     * @throws Exception the exception
+     */
     @PostMapping("/add")
     public ResponseEntity<String> insert(@RequestBody @NotNull SReplyVO vo) throws Exception {
-        ResponseEntity<String> entity = null;
-
         log.info("add -> " + vo.toString());
 
+        ResponseEntity<String> entity = null;
         try {
             sreplyService.addReply(vo);
             entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
@@ -39,19 +70,50 @@ public class SReplyController {
         return entity;
     }
 
-    @GetMapping("/list/{sno}")
-    public ResponseEntity<List<SReplyVO>> list(@PathVariable("sno") int sno) throws Exception {
-        ResponseEntity<List<SReplyVO>> entity = null;
-        log.info("sno -> " + sno);
+    /**
+     * sReplyUpdate : 구독/강의 댓글수정 update
+     * Update response entity.
+     *
+     * @param rno the rno
+     * @param vo  the vo
+     * @return the response entity
+     */
+    @PutMapping("/update/{rno}")
+    public ResponseEntity<String> update(@PathVariable("rno") int rno, @RequestBody SReplyVO vo) {
+        log.info("rno -> " + rno);
 
+        ResponseEntity<String> entity = null;
         try {
-            entity = new ResponseEntity<>(sreplyService.listReply(sno), HttpStatus.OK);
+            vo.setRno(rno);
+            sreplyService.modifyReply(vo);
 
+            entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
-            entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
+        return entity;
+    }
 
+    /**
+     * sReplyDelete : 구독/강의 댓글삭제 delete
+     * Delete response entity.
+     *
+     * @param rno the rno
+     * @return the response entity
+     */
+    @DeleteMapping("/delete/{rno}")
+    public ResponseEntity<String> delete(@PathVariable("rno") int rno) {
+        log.info("rno -> " + rno);
+
+        ResponseEntity<String> entity = null;
+        try {
+            sreplyService.removeReply(rno);
+            entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            entity = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
         return entity;
     }
 }

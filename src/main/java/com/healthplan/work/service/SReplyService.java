@@ -25,4 +25,14 @@ public class SReplyService {
     public List<SReplyVO> listReply(int sno) throws Exception {
         return sreplyMapper.listReply(sno);
     }
+
+    public void modifyReply(SReplyVO vo) throws Exception {
+        sreplyMapper.updateReply(vo);
+    }
+
+    public void removeReply(int rno) throws Exception {
+        int sno = sreplyMapper.getSno(rno);
+        sreplyMapper.deleteReply(rno);
+        subscribeMapper.updateReplyCntSubtraction(sno);
+    }
 }

@@ -33,4 +33,6 @@ public interface SubscribeMapper {
     public void updateSubscribeLessionCount(int sno) throws Exception;
 
     public void updateReplyCnt(SReplyVO vo) throws Exception;
+
+    public void updateReplyCntSubtraction(int sno) throws Exception;
 }
