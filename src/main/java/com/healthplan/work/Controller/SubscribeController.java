@@ -177,10 +177,10 @@ public class SubscribeController {
      * @return the subscribe vo
      * @throws Exception the exception
      */
-    @PutMapping("/subscribeLessionUpdate")
-    public String lessionUpdate(SubscribeVO subscribeVO) throws Exception {
+    @PutMapping("/subscribeLessionUpdate/{rno}")
+    public String lessionUpdate(@PathVariable("rno") int rno, SubscribeVO subscribeVO) throws Exception {
 
-        log.info("subscribeVO -> " + subscribeVO);
+        log.info("lessionUpdate subscribeVO -> " + subscribeVO);
         subscribeService.selectSubscribeUpdate(subscribeVO);
 
         //이미지 정보 가져오기
