@@ -2,6 +2,9 @@ package com.healthplan.work.vo;
 
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 public class SubscribeVO {
 
@@ -18,5 +21,7 @@ public class SubscribeVO {
     private String titleimg;
     private String replycnt;
     private int spoint;
+
+    private List<ImageDTO> imageDTOList = new ArrayList<>();
 
 }

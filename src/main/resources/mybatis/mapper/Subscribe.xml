@@ -30,26 +30,6 @@
 
 	</select>
 
-	<!-- 구독 조회 -->
-	<select id="selectSubscribeRead" resultType="com.healthplan.work.vo.SubscribeVO">
-
-		SELECT
-			  SNO
-			, MNO
-			, UUID
-			, STYPE
-			, TITLE
-			, CONTENTS
-			, WDATE
-			, COUNTS
-			, FILEID
-			, REPLYCNT
-			, SPOINT
-		FROM  SUBSCRIBE
-		WHERE SNO = #{sno}
-
-	</select>
-
 
 	<!-- 구독 등록 -->
 	<insert id="insertSubscribe">
@@ -105,6 +85,28 @@
 		</selectKey>
 
 	</insert>
+
+
+	<!-- 강의 상세 조회 -->
+	<select id="selectSubscribeLessionRead" resultType="com.healthplan.work.vo.SubscribeVO">
+
+		SELECT
+			  SNO
+			, MNO
+			, UUID
+			, STYPE
+			, TITLE
+			, CONTENTS
+			, WDATE
+			, COUNTS
+			, FILEID
+			, REPLYCNT
+			, SPOINT
+		FROM  SUBSCRIBE
+		WHERE SNO = #{sno}
+
+	</select>
+
 
 	<!-- 구독 수정 -->
 	<update id="updateSubscribe">
@@ -212,7 +214,6 @@
 
 	</update>
 
-
 	<!-- 댓글수 빼기 -->
 	<update id="updateReplyCntSubtraction">
 
@@ -222,6 +223,69 @@
 		WHERE SNO 	 = #{sno}
 
 	</update>
+
+	<!-- 첨부파일 등록 -->
+	<insert id="subscribeAttach" parameterType="java.util.HashMap">
+
+		<foreach collection="listMap" item="item" open="INSERT ALL" close="SELECT * FROM DUAL" separator=" ">
+
+			INTO SATTACHED(
+				  ANO
+				, SNO
+				, FILENAME
+				, IMGTYPE
+				, REGDATE
+			) VALUES(
+				  ANO_SEQ.NEXTVAL
+				, #{item.sno}
+				, #{item.fileName}
+				, 'A' <!--, #{item.imgtype}-->
+				, SYSDATE
+			)
+
+		</foreach>
+
+	</insert>
+
+
+	<!-- 첨부파일 등록 -->
+	<insert id="subscribeStringAttach" parameterType="java.lang.String">
+
+		INSERT INTO SATTACHED(
+			  ANO
+			, SNO
+			, FILENAME
+			, IMGTYPE
+			, REGDATE
+		) VALUES(
+			  ANO_SEQ.NEXTVAL
+			, #{csno}
+			, #{imgName}
+			, 'A'
+			, SYSDATE
+		)
+
+	</insert>
+
+	<!--  -->
+	<select id="selectImageList" resultType="com.healthplan.work.vo.ImageDTO">
+
+		SELECT
+		SNO
+		, MNO
+		, UUID
+		, STYPE
+		, TITLE
+		, CONTENTS
+		, WDATE
+		, COUNTS
+		, FILEID
+		, REPLYCNT
+		, SPOINT
+		FROM  SUBSCRIBE
+		WHERE SNO = #{sno}
+
+	</select>
 
 
 	<!-- 통합 list Search -->
