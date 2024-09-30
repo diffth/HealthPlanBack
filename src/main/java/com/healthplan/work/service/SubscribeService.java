@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Log4j2
@@ -57,9 +58,9 @@ public class SubscribeService {
             for (ImageDTO imageDTO : imageDTOList) {
 //                String orgName = imageDTO.getImgName();
                 String imgName = imageDTO.getThumbnailURL();
-                String imgURL = imageDTO.getImageURL();
-                String uuid = imageDTO.getUuid();
-                String path = imageDTO.getPath();
+                String imgURL  = imageDTO.getImageURL();
+                String uuid    = imageDTO.getUuid();
+                String path    = imageDTO.getPath();
                 String imgType = imageDTO.getImgType();
 
                 // mapper에 fileName, uuid, path 등을 활용한 로직 추가
@@ -90,6 +91,23 @@ public class SubscribeService {
 
     public void selectSubscribeUpdate(SubscribeVO vo) throws Exception {
         subscribeMapper.updateSubscribeLession(vo);
+        subscribeMapper.deleteAttach(vo.getSno());
+
+        List<ImageDTO> imageUpList = vo.getImageDTOList();
+
+        if (imageUpList != null && !imageUpList.isEmpty()) {
+            String sno = String.valueOf(vo.getSno());
+
+            for (ImageDTO imageDTO : imageUpList) {
+                String imgName = imageDTO.getThumbnailURL();
+                String imgURL  = imageDTO.getImageURL();
+                String uuid    = imageDTO.getUuid();
+                String path    = imageDTO.getPath();
+                String imgType = imageDTO.getImgType();
+
+                subscribeMapper.updateAttach(imgName, imgURL, uuid, path, imgType, sno);
+            }
+        }
     }
 
     public void subscribeLessionDelete(int sno) throws Exception {

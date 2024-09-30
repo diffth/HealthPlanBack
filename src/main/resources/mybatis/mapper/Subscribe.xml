@@ -292,6 +292,30 @@
 
 	</insert>
 
+	<!-- 첨부파일 update -->
+	<insert id="updateAttach" parameterType="java.lang.String">
+
+		INSERT INTO NATTACH (
+			  IMGNAME
+			, IMAGEURL
+			, UUID
+			, PATH
+			, IMGTYPE
+			, SNO
+			, REGDATE
+		)
+		VALUES (
+			  #{imgName}
+			, #{imgURL}
+			, #{uuid}
+			, #{path}
+			, #{imgType}
+			, #{sno}
+			, SYSDATE
+		)
+
+	</insert>
+
 
 	<!-- 첨부파일 select -->
 	<select id="selectImageList" resultType="com.healthplan.work.vo.ImageDTO">
@@ -306,6 +330,14 @@
 		ORDER BY REGDATE
 
 	</select>
+
+
+	<!-- 첨부파일 삭제 -->
+	<delete id="deleteAttach">
+
+		DELETE FROM NATTACH WHERE SNO = #{sno}
+
+	</delete>
 
 
 	<!-- 통합 list Search -->

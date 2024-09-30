@@ -177,19 +177,15 @@ public class SubscribeController {
      * subscribeLessionRead : 강의수정 update one
      * Lession update subscribe vo.
      *
-     * @param rno         the rno
      * @param subscribeVO the subscribe vo
      * @return the subscribe vo
      * @throws Exception the exception
      */
-    @PutMapping("/subscribeLessionUpdate/{rno}")
-    public String lessionUpdate(@PathVariable("rno") int rno, SubscribeVO subscribeVO) throws Exception {
+    @PutMapping("/subscribeLessionUpdate")
+    public String lessionUpdate(@RequestBody SubscribeVO subscribeVO) throws Exception {
 
         log.info("lessionUpdate subscribeVO -> " + subscribeVO);
         subscribeService.selectSubscribeUpdate(subscribeVO);
-
-        //이미지 정보 가져오기
-        //List<SubscribeVO> imageDTOList = getImageDTOList(bNo);
 
         return "success";
     }
