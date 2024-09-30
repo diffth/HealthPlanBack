@@ -267,23 +267,43 @@
 
 	</insert>
 
-	<!--  -->
+
+	<!-- 첨부파일 insert -->
+	<insert id="addAttach" parameterType="java.lang.String">
+
+		INSERT INTO NATTACH (
+			  IMGNAME
+			, IMAGEURL
+			, UUID
+			, PATH
+			, IMGTYPE
+			, SNO
+			, REGDATE
+		)
+		VALUES (
+			  #{imgName}
+			, #{imgURL}
+			, #{uuid}
+			, #{path}
+			, #{imgType}
+			, SNO_SEQ.CURRVAL
+			, SYSDATE
+		)
+
+	</insert>
+
+
+	<!-- 첨부파일 select -->
 	<select id="selectImageList" resultType="com.healthplan.work.vo.ImageDTO">
 
 		SELECT
-		SNO
-		, MNO
-		, UUID
-		, STYPE
-		, TITLE
-		, CONTENTS
-		, WDATE
-		, COUNTS
-		, FILEID
-		, REPLYCNT
-		, SPOINT
-		FROM  SUBSCRIBE
+			  IMGNAME
+			, IMAGEURL
+			, UUID
+			, PATH
+		FROM  NATTACH
 		WHERE SNO = #{sno}
+		ORDER BY REGDATE
 
 	</select>
 

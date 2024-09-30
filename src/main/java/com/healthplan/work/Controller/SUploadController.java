@@ -50,7 +50,7 @@ public class SUploadController {
             String originalName = uploadFile.getOriginalFilename();
             String fileName = originalName.substring(originalName.lastIndexOf("\\") + 1);
 
-            log.info("fileName: " + fileName);
+            log.info("Origin fileName: " + fileName);
 
             // 날짜 폴더 생성
             String folderPath = makeFolder();
@@ -61,12 +61,16 @@ public class SUploadController {
             String saveName = uploadPath + File.separator + folderPath + File.separator + uuid + "_" + fileName;
             Path savePath = Paths.get(saveName);
 
+            log.info("Save fileName: " + saveName);
+
             try {// 원본 파일 저장
                 uploadFile.transferTo(savePath);
 
                 // 섬네일 생성
                 String thumbnailSaveName = uploadPath + File.separator + folderPath + File.separator + "s_" + uuid + "_"
                         + fileName;
+                log.info("thumbnailSaveName fileName: " + thumbnailSaveName);
+
                 // 섬네일 파일 이름은 중간에 s_로 시작하도록
                 File thumbnailFile = new File(thumbnailSaveName);
 
@@ -120,17 +124,19 @@ public class SUploadController {
     @GetMapping("/display")
     public ResponseEntity<byte[]> getFile(String fileName, String size) {
         ResponseEntity<byte[]> result = null;
+        log.info("Origin fileName: " + fileName);
 
         try {
             String srcFileName = URLDecoder.decode(fileName, "UTF-8");
-            log.info("fileName: " + srcFileName);
+            log.info("src fileName: " + srcFileName);
 
             File file = new File(uploadPath + File.separator + srcFileName);
+            log.info("file 1: " + file);
 
             if (size != null && size.equals("1")) {
                 file = new File(file.getParent(), file.getName().substring(2));
             }
-            log.info("file: " + file);
+            log.info("file 2: " + file);
 
             HttpHeaders header = new HttpHeaders();
             // MIME타입 처리

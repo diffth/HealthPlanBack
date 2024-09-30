@@ -43,4 +43,7 @@ public interface SubscribeMapper {
     public void subscribeStringAttach(String csno, String imgName) throws Exception;
 
     public List<ImageDTO> selectImageList(int sno) throws Exception;
+
+    public void addAttach(String imgName, String imgURL, String uuid, String path, String imgType) throws Exception;
+
 }

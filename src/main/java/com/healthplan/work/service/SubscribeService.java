@@ -51,49 +51,41 @@ public class SubscribeService {
     public void subscribeLessionInsert(SubscribeVO vo) throws Exception {
         subscribeMapper.insertSubscribeLession(vo);
 
-        List<ImageDTO> imageList = vo.getImageDTOList();
+        List<ImageDTO> imageDTOList = vo.getImageDTOList();
 
-        if (imageList != null && !imageList.isEmpty()) {
-            HashMap<String, Object> map = new HashMap<String, Object>();
-            List<HashMap<String, Object>> listMap = new ArrayList<HashMap<String,Object>>();
-            int sno = vo.getSno();
+        if (imageDTOList != null && !imageDTOList.isEmpty()) {
+            for (ImageDTO imageDTO : imageDTOList) {
+//                String orgName = imageDTO.getImgName();
+                String imgName = imageDTO.getThumbnailURL();
+                String imgURL = imageDTO.getImageURL();
+                String uuid = imageDTO.getUuid();
+                String path = imageDTO.getPath();
+                String imgType = imageDTO.getImgType();
 
-            for (ImageDTO idto : imageList) {
-                HashMap<String, Object> data = new HashMap<String, Object>();
-
-                data.put("fileName", "/" + idto.getPath() + "/" +idto.getImgName());
-                data.put("sno", sno);
-                listMap.add(data);
-
-//                String imgName = idto.getImgName();
-//                String uuid = idto.getUuid();
-//                String path = idto.getPath();
-//                subscribeMapper.subscribeStringAttach(csno, imgName);
+                // mapper에 fileName, uuid, path 등을 활용한 로직 추가
+                subscribeMapper.addAttach(imgName, imgURL, uuid, path, imgType);
             }
-            map.put("listMap", listMap);
-            subscribeMapper.subscribeAttach(map);
         }
 
+//        Spring legacy case
+//        List<ImageDTO> imageList = vo.getImageDTOList();
 //        String[] files = vo.getFileid();
-//
-//        if(files != null) {
-//            String[] imgType = vo.getImgtype();
-//
+
+//        if (imageList != null && !imageList.isEmpty()) {
 //            HashMap<String, Object> map = new HashMap<String, Object>();
 //            List<HashMap<String, Object>> listMap = new ArrayList<HashMap<String,Object>>();
-//
 //            int sno = vo.getSno();
 //
-//            for(int i=0; i < files.length; i++){
+//            for (ImageDTO idto : imageList) {
 //                HashMap<String, Object> data = new HashMap<String, Object>();
 //
-//                data.put("fileName", files[i]);
+//                data.put("fileName", "/" + idto.getPath() + "/" +idto.getImgName());
 //                data.put("sno", sno);
-//                data.put("imgtype", imgType[i]);
 //                listMap.add(data);
 //            }
 //            map.put("listMap", listMap);
 //            subscribeMapper.subscribeAttach(map);
+//        }
     }
 
     public void selectSubscribeUpdate(SubscribeVO vo) throws Exception {
