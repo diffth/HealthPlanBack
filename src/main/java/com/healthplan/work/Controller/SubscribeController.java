@@ -99,11 +99,11 @@ public class SubscribeController {
      * @throws Exception the exception
      */
     @PutMapping("/subscribeUpdate")
-    public String update(SubscribeVO subscribeVO) throws Exception {
-        subscribeService.subscribeUpdate(subscribeVO);
-        log.info("subscribeUpdate -> " + subscribeVO.toString());
+    public String update(@RequestBody SubscribeVO subscribeVO) throws Exception {
+        log.info("subscribeUpdate subscribeVO -> " + subscribeVO);
 
-        return "redirect:/subscribe/subscribeList";
+        subscribeService.selectSubscribeUpdate(subscribeVO);
+        return "success";
     }
 
     /**
@@ -115,10 +115,10 @@ public class SubscribeController {
      */
     @DeleteMapping("/subscribeDelete/{sno}")
     public String delete(@PathVariable("sno") int sno) throws Exception {
-        subscribeService.subscribeDelete(sno);
         log.info("subscribeDelete -> " + sno);
+        subscribeService.subscribeDelete(sno);
 
-        return "redirect:/subscribe/subscribeList";
+        return "success";
     }
 
     /*****************************************************************************************************************

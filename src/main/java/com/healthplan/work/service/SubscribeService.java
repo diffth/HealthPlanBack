@@ -31,6 +31,20 @@ public class SubscribeService {
 
     public void subscribeInsert(SubscribeVO vo) throws Exception {
         subscribeMapper.insertSubscribe(vo);
+
+        List<ImageDTO> imageDTOList = vo.getImageDTOList();
+
+        if (imageDTOList != null && !imageDTOList.isEmpty()) {
+            for (ImageDTO imageDTO : imageDTOList) {
+                String imgName = imageDTO.getThumbnailURL();
+                String imgURL  = imageDTO.getImageURL();
+                String uuid    = imageDTO.getUuid();
+                String path    = imageDTO.getPath();
+                String imgType = imageDTO.getImgType();
+
+                subscribeMapper.addAttach(imgName, imgURL, uuid, path, imgType);
+            }
+        }
     }
 
     public void subscribeUpdate(SubscribeVO vo) throws Exception {
@@ -39,6 +53,7 @@ public class SubscribeService {
 
     public void subscribeDelete(int sno) throws Exception {
         subscribeMapper.deleteSubscribe(sno);
+        subscribeMapper.deleteSubscribeLession(sno);
     }
 
     public List<SubscribeVO> selectSubscribeLessionList(SearchCriteria cri) throws Exception {
@@ -91,9 +106,9 @@ public class SubscribeService {
 
     public void selectSubscribeUpdate(SubscribeVO vo) throws Exception {
         subscribeMapper.updateSubscribeLession(vo);
-        subscribeMapper.deleteAttach(vo.getSno());
 
         List<ImageDTO> imageUpList = vo.getImageDTOList();
+        subscribeMapper.deleteAttach(vo.getSno());
 
         if (imageUpList != null && !imageUpList.isEmpty()) {
             String sno = String.valueOf(vo.getSno());
