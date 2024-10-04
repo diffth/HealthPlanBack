@@ -50,7 +50,7 @@ public class SubscribeController {
         result.put("pageMaker", pageMaker);
 
         log.info("cri	-> " + cri);
-        log.info("subscribeList result-> " + result.toString());
+        log.info("subscribeList result-> " + result);
         return result;
     }
 
@@ -78,10 +78,10 @@ public class SubscribeController {
      */
     @GetMapping("/subscribeRead/{sno}")
     public SubscribeVO read(@PathVariable("sno") int sno) throws Exception {
-        SubscribeVO vo = subscribeService.selectSubscrLessionibeRead(sno);
+        SubscribeVO vo = subscribeService.selectSubscribeRead(sno);
 
         log.info("sno -> " + sno);
-        log.info("subscribeLessionRead result -> " + vo.toString());
+        log.info("subscribeRead result -> " + vo.toString());
 
         //이미지 정보 가져오기
         List<ImageDTO> imageDTOList = subscribeService.selectImageList(sno);
@@ -145,7 +145,7 @@ public class SubscribeController {
         result.put("pageMaker", pageMaker);
 
         log.info("cri	-> " + cri);
-        log.info("subscribeLessionList result-> " + result.toString());
+        log.info("subscribeLessionList result-> " + result);
         return result;
     }
 

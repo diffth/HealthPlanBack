@@ -51,4 +51,8 @@ public interface SubscribeMapper {
     public void updateAttach(String imgName, String imgURL, String uuid, String path, String imgType, String sno) throws Exception;
 
     public int selectSubscribeCount(SearchCriteria cri) throws Exception;
+
+    public void updateSubscribeCount(int sno) throws Exception;
+
+    public SubscribeVO selectSubscribeRead(int sno) throws Exception;
 }

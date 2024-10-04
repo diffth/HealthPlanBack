@@ -115,9 +115,8 @@ public class SubscribeService {
     }
 
     public SubscribeVO selectSubscribeRead(int sno) throws Exception {
-        //subscribeMapper.updateSubscribeCount(sno);
-        //return subscribeMapper.selectSubscribeLessionRead(sno);
-        return null;
+        subscribeMapper.updateSubscribeCount(sno);
+        return subscribeMapper.selectSubscribeRead(sno);
     }
 
     public List<ImageDTO> selectImageList(int sno) throws Exception {

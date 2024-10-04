@@ -113,6 +113,26 @@
 
 	</select>
 
+	<!-- 구독 상세 조회 -->
+	<select id="selectSubscribeRead" resultType="com.healthplan.work.vo.SubscribeVO">
+
+		SELECT
+			  SNO
+			, MNO
+			, UUID
+			, STYPE
+			, TITLE
+			, CONTENTS
+			, WDATE
+			, COUNTS
+			, FILEID
+			, REPLYCNT
+			, SPOINT
+		FROM  SUBSCRIBE
+		WHERE SNO = #{sno}
+
+	</select>
+
 
 	<!-- 구독 수정 -->
 	<update id="updateSubscribe">
@@ -216,6 +236,16 @@
 
 	<!-- 강의 조회수 -->
 	<update id="updateSubscribeLessionCount">
+
+		UPDATE SUBSCRIBE
+		SET
+			  COUNTS = COUNTS + 1
+		WHERE SNO = #{sno}
+
+	</update>
+
+	<!-- 구독 조회수 -->
+	<update id="updateSubscribeCount">
 
 		UPDATE SUBSCRIBE
 		SET
