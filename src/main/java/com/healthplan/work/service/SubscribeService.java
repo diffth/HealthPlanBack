@@ -20,8 +20,8 @@ public class SubscribeService {
     @Autowired
     private SubscribeMapper subscribeMapper;
 
-    public List<SubscribeVO> selectSubscribeList() throws Exception {
-        return subscribeMapper.selectSubscribeList();
+    public List<SubscribeVO> selectSubscribeList(SearchCriteria cri) throws Exception {
+        return subscribeMapper.selectSubscribeList(cri);
     }
 
     public SubscribeVO selectSubscrLessionibeRead(int sno) throws Exception {
@@ -122,5 +122,9 @@ public class SubscribeService {
 
     public List<ImageDTO> selectImageList(int sno) throws Exception {
         return subscribeMapper.selectImageList(sno);
+    }
+
+    public int selectSubscribeCount(SearchCriteria cri) throws Exception {
+        return subscribeMapper.selectSubscribeCount(cri);
     }
 }

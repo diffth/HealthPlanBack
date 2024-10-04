@@ -29,17 +29,28 @@ public class SubscribeController {
     /*****************************************************************************************************************
      * subscribeList : 전문가구독 list
      *
+     * @param cri the cri
      * @return the map
      * @throws Exception the exception
      */
     @GetMapping("/subscribeList")
-    public Map<String, Object> list() throws Exception {
+    public Map<String, Object> list(@NotNull SearchCriteria cri) throws Exception {
         Map<String, Object> result = new HashMap<>();
 
-        List<SubscribeVO> list = subscribeService.selectSubscribeList();
-        log.info("subscribeList -> " + list.toString());
+        //전체검색 onchange x
+        if ("".equals(cri.getSearchType())) {
+            cri.setSearchType("total");
+        }
+        PageMaker pageMaker = new PageMaker();
+        pageMaker.setCri(cri);
+        pageMaker.setTotalCount(subscribeService.selectSubscribeCount(cri));
 
+        List<SubscribeVO> list = subscribeService.selectSubscribeList(cri);
         result.put("list", list);
+        result.put("pageMaker", pageMaker);
+
+        log.info("cri	-> " + cri);
+        log.info("subscribeList result-> " + result.toString());
         return result;
     }
 
@@ -65,14 +76,19 @@ public class SubscribeController {
      * @return the map
      * @throws Exception the exception
      */
-    @GetMapping({"/subscribeRead/{sno}", "/subscribeModify/{sno}"})
-    public Map<String, Object> read(@PathVariable("sno") int sno) throws Exception {
-        Map<String, Object> result = new HashMap<>();
-        SubscribeVO vo = subscribeService.selectSubscribeRead(sno);
-        log.info("subscribeRead -> " + vo.toString());
+    @GetMapping("/subscribeRead/{sno}")
+    public SubscribeVO read(@PathVariable("sno") int sno) throws Exception {
+        SubscribeVO vo = subscribeService.selectSubscrLessionibeRead(sno);
 
-        result.put("vo", vo);
-        return result;
+        log.info("sno -> " + sno);
+        log.info("subscribeLessionRead result -> " + vo.toString());
+
+        //이미지 정보 가져오기
+        List<ImageDTO> imageDTOList = subscribeService.selectImageList(sno);
+        log.info("imageDTOList -> " + imageDTOList.toString());
+
+        vo.setImageDTOList(imageDTOList);
+        return vo;
     }
 
     /**
@@ -120,7 +136,6 @@ public class SubscribeController {
         if ("".equals(cri.getSearchType())) {
             cri.setSearchType("total");
         }
-
         PageMaker pageMaker = new PageMaker();
         pageMaker.setCri(cri);
         pageMaker.setTotalCount(subscribeService.selectSubscribeLessionCount(cri));

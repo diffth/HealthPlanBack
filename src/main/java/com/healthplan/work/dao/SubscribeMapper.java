@@ -12,7 +12,7 @@ import java.util.List;
 @Mapper
 public interface SubscribeMapper {
 
-    public List<SubscribeVO> selectSubscribeList() throws Exception;
+    public List<SubscribeVO> selectSubscribeList(SearchCriteria cri) throws Exception;
 
     public SubscribeVO selectSubscribeLessionRead(int sno) throws Exception;
 
@@ -49,4 +49,6 @@ public interface SubscribeMapper {
     public void deleteAttach(int sno) throws Exception;
 
     public void updateAttach(String imgName, String imgURL, String uuid, String path, String imgType, String sno) throws Exception;
+
+    public int selectSubscribeCount(SearchCriteria cri) throws Exception;
 }
