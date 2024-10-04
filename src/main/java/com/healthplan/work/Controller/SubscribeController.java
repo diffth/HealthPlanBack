@@ -63,10 +63,10 @@ public class SubscribeController {
      */
     @PostMapping("/subscribeInsert")
     public String insert(@RequestBody SubscribeVO subscribeVO) throws Exception {
+        log.info("subscribeInsert -> " + subscribeVO);
         subscribeService.subscribeInsert(subscribeVO);
-        log.info("subscribeInsert -> " + subscribeVO.toString());
 
-        return "redirect:/subscribe/subscribeList";
+        return "success";
     }
 
     /**
