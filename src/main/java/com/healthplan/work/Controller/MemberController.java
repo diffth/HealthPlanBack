@@ -2,6 +2,7 @@ package com.healthplan.work.Controller;
 
 import com.healthplan.work.dao.MemberMapper;
 import com.healthplan.work.dto.LoginDTO;
+import com.healthplan.work.service.MemberService;
 import com.healthplan.work.util.JwtUtils;
 import com.healthplan.work.vo.MemberEntity;
 import jakarta.servlet.http.Cookie;
@@ -37,60 +38,56 @@ import java.util.Map;
 @RequestMapping("/member")
 public class MemberController {
 
-    private final PasswordEncoder passwordEncoder;
-    /**
-     * The Mapper.
-     */
     @Autowired
-    MemberMapper mapper;
+    private MemberService memberService;
 
-    @Autowired
-    private JwtUtils jwtUtils = new JwtUtils();
+//    private JwtUtils jwtUtils = new JwtUtils();
+
+    // private PasswordEncoder passwordEncoder;
+//    private final PasswordEncoder passwordEncoder;
+
 
     /**
      * Instantiates a new Member controller.
      *
      * @param passwordEncoder the password encoder
      */
-    @Autowired
-    // private PasswordEncoder passwordEncoder;
-
-
-    public MemberController(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-    }
+//    public MemberController(PasswordEncoder passwordEncoder) {
+//        this.passwordEncoder = passwordEncoder;
+//    }
 
     /**
-     * Select list list.
+     * Select list.
      *
-     * @param model the model
      * @return the list
      * @throws Exception the exception
      */
-// 회원리스트
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public List<MemberEntity> selectList(Model model) throws Exception {
+    @GetMapping("/list")
+    public List<MemberEntity> mList() throws Exception {
 
-        log.info("//****************************** /member/list");
-
-        List<MemberEntity> list = mapper.selectMemberList();
-
-        log.info("// list.toString()=" + list.toString());
+        List<MemberEntity> list = memberService.selectMemberList();
+        log.info("/member/list -> " + list);
 
         return list;
     }
 
-/*    // mNo로 회원정보 조회
-    @RequestMapping(value = "/getUuidByMno", method = RequestMethod.POST)
-    public String getUuidByMno (@RequestBody MemberEntity mem) throws Exception {
+    @PostMapping("/uuidCk")
+    public int uuidChk(@RequestBody Map<String, String> request) throws Exception {
 
-        logger.info("read post ...........");
-        logger.info(mem.toString());
+        String uuid = request.get("uuid");
+        log.info("/member/uuidCk -> " + uuid);
 
-        String num =mapper.selectMno(mem);
+        int result = memberService.selectIdCount(uuid);
+        return result;
+    }
 
-        return num;
-    }*/
+    @PostMapping("/register")
+    public String mInsert(@RequestBody MemberEntity member) throws Exception {
+        log.info("/member/register -> " + member);
+
+        memberService.insertMember(member);
+        return "success";
+    }
 
     /**
      * Gets uuid by mno.
@@ -99,7 +96,7 @@ public class MemberController {
      * @return the uuid by mno
      * @throws Exception the exception
      */
-    @RequestMapping(value = "/getUuidByMno", method = RequestMethod.POST)
+    /*@PostMapping("/getUuidByMno")
     public ResponseEntity<Map<String, String>> getUuidByMno(@RequestBody MemberEntity mem) throws Exception {
         log.info("회원정보 조회 요청 - mno: " + mem.getMno());
 
@@ -117,7 +114,7 @@ public class MemberController {
             // 해당 mno에 대한 uuid가 없을 경우
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-    }
+    }*/
 
 
     /**
@@ -127,10 +124,10 @@ public class MemberController {
      * @return the uuids by mnos
      * @throws Exception the exception
      */
-    @PostMapping("/getUuidsByMnos")
+    /*@PostMapping("/getUuidsByMnos")
     public Map<Integer, String> getUuidsByMnos(@RequestBody List<Integer> mnos) throws Exception {
         return mapper.getUuidsByMnos(mnos);
-    }
+    }*/
 
 
     /**
@@ -141,7 +138,7 @@ public class MemberController {
      * @throws Exception the exception
      */
 // 회원번호 조회
-    @RequestMapping(value = "/readMno", method = RequestMethod.POST)
+    /*@RequestMapping(value = "/readMno", method = RequestMethod.POST)
     public ResponseEntity<MemberEntity> selectMno(@RequestBody Map<String, String> requestData) throws Exception {
 
         // Map에서 "uuid" 값 추출
@@ -159,38 +156,10 @@ public class MemberController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-    }
+    }*/
 
 
-    /**
-     * Insert mem post response entity.
-     *
-     * @param mem the mem
-     * @return the response entity
-     * @throws Exception the exception
-     */
-/// 회원가입
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public ResponseEntity<String> insertMemPOST(@RequestBody MemberEntity mem) throws Exception {
 
-        log.info("/*********************** 회원가입!! regist post ...........");
-        log.info(mem.toString());
-
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String hashedPassword = passwordEncoder.encode(mem.getUpw());
-
-        System.out.println("해시된 비밀번호:" + hashedPassword);
-
-        mem.setUpw(hashedPassword);
-
-        mapper.insertMem(mem);
-        int pmno = mapper.currval(); // 현재 회원번호 조회
-
-        mapper.setpoint(pmno); // 기본 포인트 등록!
-
-        //return "success";
-        return ResponseEntity.ok("success");
-    }
 
 
     /**
@@ -201,7 +170,7 @@ public class MemberController {
      * @throws Exception the exception
      */
 // 로그인
-    @RequestMapping(value = "/loginPost", method = RequestMethod.POST)
+    /*@RequestMapping(value = "/loginPost", method = RequestMethod.POST)
     public  ResponseEntity<?> loginPOST(@RequestBody @NotNull LoginDTO dto) throws Exception {
 
         log.info("/******************************************** loginPost");
@@ -247,7 +216,7 @@ public class MemberController {
             log.error("로그인 처리 중 오류 발생", e);
             return new ResponseEntity<>("서버 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
+    }*/
 
     /**
      * Login cookie response entity.
@@ -257,7 +226,7 @@ public class MemberController {
      * @throws Exception the exception
      */
 // 쿠키 관리
-    @RequestMapping(value = "/loginCookie", method = RequestMethod.POST)
+    /*@RequestMapping(value = "/loginCookie", method = RequestMethod.POST)
     public  ResponseEntity<?> loginCookie(@RequestBody @NotNull Map<String, String> requestData) throws Exception {
 
         log.info("/*************** /loginCookie 시작...");
@@ -288,7 +257,7 @@ public class MemberController {
             return new ResponseEntity<>("서버 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-    }
+    }*/
 
     /**
      * Logout string.
@@ -300,7 +269,7 @@ public class MemberController {
      * @throws Exception the exception
      */
 // 로그아웃
-    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    /*@RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logout(HttpServletRequest request, HttpServletResponse response, HttpSession session)
             throws Exception {
 
@@ -322,37 +291,7 @@ public class MemberController {
             }
         }
         return "success";
-    }
-
-    /**
-     * Uuid ck int.
-     *
-     * @param requestData the request data
-     * @return the int
-     * @throws Exception the exception
-     */
-//아이디 중복체크
-    @PostMapping("/uuidCk")
-    public int uuidCk(@RequestBody Map<String, String> requestData) throws Exception {
-
-        log.info("1. /******************** 포스트 돌겠습니다 !!! uuidCk post ...........");
-
-        // Map에서 "uuid" 값 추출
-        String uuid = requestData.get("uuid");
-
-        // 로그로 uuid 확인
-        log.info("2. 조회할 아이디 : " + uuid);
-
-        // logger.info("/******************** 포스트 돌겠습니다 !!! uuidCk post ..........."+ uuid);
-        log.info("3. "+uuid.toString());
-
-        int result = mapper.uuidCk(uuid);
-
-        log.info("4. result 값 확인: "+result);
-
-        return result;
-
-    }
+    }*/
 
     /**
      * Email ck int.
@@ -362,7 +301,7 @@ public class MemberController {
      * @throws Exception the exception
      */
 // 이메일 중복체크
-    @RequestMapping(value = "/emailCk", method = RequestMethod.POST)
+    /*@RequestMapping(value = "/emailCk", method = RequestMethod.POST)
     public int emailCk(@RequestBody String email) throws Exception {
         log.info("/******************** 포스트 돌겠습니다 !! emailCk post ...........");
         log.info(email.toString());
@@ -370,7 +309,7 @@ public class MemberController {
         int result = mapper.emailCk(email);
 
         return result;
-    }
+    }*/
 
     /**
      * Select name response entity.
@@ -380,7 +319,7 @@ public class MemberController {
      * @throws Exception the exception
      */
 // 이름 조회
-    @RequestMapping(value = "/readName", method = RequestMethod.POST)
+    /*@RequestMapping(value = "/readName", method = RequestMethod.POST)
     public ResponseEntity<MemberEntity> selectName(@RequestBody Map<String, String> requestData) throws Exception {
 
         // Map에서 "uuid" 값 추출
@@ -398,7 +337,7 @@ public class MemberController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-    }
+    }*/
 
 
     /**
@@ -409,7 +348,7 @@ public class MemberController {
      * @throws Exception the exception
      */
 // 마이페이지 회원정보 조회
-    @RequestMapping(value = "/read", method = RequestMethod.POST)
+    /*@RequestMapping(value = "/read", method = RequestMethod.POST)
     public ResponseEntity<MemberEntity> selectMemId(@RequestBody Map<String, String> requestData) throws Exception {
 
         // Map에서 "uuid" 값 추출
@@ -428,7 +367,7 @@ public class MemberController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         // return mapper.selectUuid(mem.getUuid());
-    }
+    }*/
 
     /**
      * Update post string.
@@ -439,7 +378,7 @@ public class MemberController {
      * @throws Exception the exception
      */
 // 마이페이지 회원정보 수정
-    @RequestMapping(value = "/modify", method = RequestMethod.POST)
+    /*@RequestMapping(value = "/modify", method = RequestMethod.POST)
     public String updatePOST(@RequestBody MemberEntity mem, RedirectAttributes rttr) throws Exception {
 
         log.info(mem.toString());
@@ -459,7 +398,7 @@ public class MemberController {
 
         return "SUCCESS";
 
-    }
+    }*/
 
     /**
      * Delete string.
@@ -469,7 +408,7 @@ public class MemberController {
      * @throws Exception the exception
      */
 // 회원탈퇴
-    @RequestMapping(value = "/remove", method = RequestMethod.POST)
+    /*@RequestMapping(value = "/remove", method = RequestMethod.POST)
     public String delete(@RequestBody MemberEntity mem) throws Exception {
 
         log.info("delete post ...........");
@@ -478,5 +417,5 @@ public class MemberController {
         mapper.delete(mem.getUuid());
 
         return "succ";
-    }
+    }*/
 }

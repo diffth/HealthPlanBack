@@ -62,6 +62,12 @@ public interface MemberMapper {
     // 회원번호 조회
     public MemberEntity selectMno(String uuid) throws Exception;
 
+    public void insertMember(MemberEntity member) throws Exception;
+
+    public void setPoint(int mno) throws Exception;
+
+    public int selectIdCount(String uuid) throws Exception;
+
 /*
     public MemberEntity login(LoginDTO dto) throws Exception;
 

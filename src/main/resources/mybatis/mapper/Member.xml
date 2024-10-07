@@ -46,6 +46,36 @@
         #{email}, SYSDATE)
     </insert>
 
+
+    <!-- member insert -->
+    <insert id="insertMember" parameterType="com.healthplan.work.vo.MemberEntity">
+
+        INSERT INTO MEMBER(
+              MNO
+            , UUID
+            , UPW
+            , PHONE
+            , NAME
+            , MTYPE
+            , EMAIL
+            , REGDATE
+        ) VALUES (
+              MNO_SEQ.NEXTVAL
+            , #{uuid}
+            , #{upw}
+            , #{phone}
+            , #{name}
+            , #{mtype}
+            , #{email}
+            , SYSDATE
+        )
+
+        <selectKey keyProperty="mno" resultType="int" order="AFTER">
+            SELECT MNO_SEQ.CURRVAL FROM DUAL
+        </selectKey>
+
+    </insert>
+
     <!-- 현재 회원번호 조회  -->
     <select id="currval"  resultType="int">
         SELECT mno_seq.currval from dual
@@ -56,6 +86,26 @@
         insert
         into point (pno, mno, pcount, psource, pdate)
         values (pno_seq.NEXTVAL, #{pmno}, '0', '회원가입', sysdate)
+    </insert>
+
+
+    <!-- 회원가입 POINT -->
+    <insert id = "setPoint" >
+
+        INSERT INTO POINT (
+              PNO
+            , MNO
+            , PCOUNT
+            , PSOURCE
+            , PDATE
+        ) VALUES (
+              PNO_SEQ.NEXTVAL
+            , #{mno}
+            , '0'
+            , 'J'
+            , SYSDATE
+        )
+
     </insert>
 
     <!-- 로그인 > 비밀번호 일치여부 확인-->
@@ -88,6 +138,18 @@
         from member
         where uuid = #{uuid}
     </select>
+
+
+    <!-- 아이디 중복 체크 -->
+    <select id="selectIdCount" resultType="int">
+
+        SELECT
+              COUNT(*)
+        FROM  MEMBER
+        WHERE UUID = #{uuid}
+
+    </select>
+
 
     <!-- 이메일 중복 체크 -->
     <select id="emailCk" resultType="int">
