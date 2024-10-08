@@ -131,7 +131,7 @@ public class MemberController {
      * @return the response entity
      * @throws Exception the exception
      */
-// 회원번호 조회
+    // 회원번호 조회
     /*@RequestMapping(value = "/readMno", method = RequestMethod.POST)
     public ResponseEntity<MemberEntity> selectMno(@RequestBody Map<String, String> requestData) throws Exception {
 
@@ -153,51 +153,52 @@ public class MemberController {
     }*/
 
 
-
+    /*
     @PostMapping("/loginPost")
     public  ResponseEntity<?> loginPOST(@RequestBody @NotNull LoginDTO dto) throws Exception {
-
-        try {
-            final String token = jwtUtils.generateToken(dto.getUuid());
-            log.info("/*** 인코딩 !!!! token=" + token);
-
-            // JWT 토큰 유효성 검사
-            boolean isValidToken = jwtUtils.validateToken(token, dto.getUuid());
-            log.info("토큰 유효성: " + isValidToken);
-
-            // 저장된 해시된 비밀번호 가져오기
-            String storedHashedPassword = mapper.getHashedPasswordByUuid(dto.getUuid());
-            log.info("저장된 해시된 비밀번호 가져오기!!!! Stored Hashed Password: " + storedHashedPassword);
-
-            // 비밀번호 비교
-            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            boolean isPasswordMatch = passwordEncoder.matches(dto.getUpw(), storedHashedPassword);
-            log.info("비밀번호 일치 여부: " + isPasswordMatch);
-
-            if (isPasswordMatch) {
-                // 로그인 성공 시, 토큰과 사용자 정보를 응답 본문과 헤더에 포함하여 클라이언트에 전달
-                MemberEntity loggedInMember = mapper.login(dto);
-
-                // 응답 헤더에 토큰 포함
-                HttpHeaders responseHeaders = new HttpHeaders();
-                responseHeaders.set("Authorization", "Bearer " + token);
-
-                // 응답 본문에도 JWT 토큰과 사용자 정보 포함
-                Map<String, Object> responseBody = new HashMap<>();
-                responseBody.put("member", loggedInMember);
-                responseBody.put("token", token);
-
-                return new ResponseEntity<>(responseBody, responseHeaders, HttpStatus.OK);
-
-            } else {
-                // 비밀번호 불일치 시
-                return new ResponseEntity<>("비밀번호가 일치하지 않습니다.", HttpStatus.UNAUTHORIZED);
-            }
-        } catch (Exception e) {
-            log.error("로그인 처리 중 오류 발생", e);
-            return new ResponseEntity<>("서버 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+        
+    try {
+        final String token = jwtUtils.generateToken(dto.getUuid());
+        log.info("/*** 인코딩 !!!! token=" + token);
+        
+        // JWT 토큰 유효성 검사
+        boolean isValidToken = jwtUtils.validateToken(token, dto.getUuid());
+        log.info("토큰 유효성: " + isValidToken);
+        
+        // 저장된 해시된 비밀번호 가져오기
+        String storedHashedPassword = mapper.getHashedPasswordByUuid(dto.getUuid());
+        log.info("저장된 해시된 비밀번호 가져오기!!!! Stored Hashed Password: " + storedHashedPassword);
+        
+        // 비밀번호 비교
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        boolean isPasswordMatch = passwordEncoder.matches(dto.getUpw(), storedHashedPassword);
+        log.info("비밀번호 일치 여부: " + isPasswordMatch);
+        
+        if (isPasswordMatch) {
+            // 로그인 성공 시, 토큰과 사용자 정보를 응답 본문과 헤더에 포함하여 클라이언트에 전달
+            MemberEntity loggedInMember = mapper.login(dto);
+            
+            // 응답 헤더에 토큰 포함
+            HttpHeaders responseHeaders = new HttpHeaders();
+            responseHeaders.set("Authorization", "Bearer " + token);
+            
+            // 응답 본문에도 JWT 토큰과 사용자 정보 포함
+            Map<String, Object> responseBody = new HashMap<>();
+            responseBody.put("member", loggedInMember);
+            responseBody.put("token", token);
+            
+            return new ResponseEntity<>(responseBody, responseHeaders, HttpStatus.OK);
+            
+        } else {
+            // 비밀번호 불일치 시
+            return new ResponseEntity<>("비밀번호가 일치하지 않습니다.", HttpStatus.UNAUTHORIZED);
         }
+    } catch (Exception e) {
+        log.error("로그인 처리 중 오류 발생", e);
+        return new ResponseEntity<>("서버 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
     }
+}
+*/
 
     /**
      * Login cookie response entity.
