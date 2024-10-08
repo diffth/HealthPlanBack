@@ -41,7 +41,7 @@ public class MemberController {
     @Autowired
     private MemberService memberService;
 
-//    private JwtUtils jwtUtils = new JwtUtils();
+    
 
     // private PasswordEncoder passwordEncoder;
 //    private final PasswordEncoder passwordEncoder;
@@ -79,7 +79,7 @@ public class MemberController {
      * @throws Exception the exception
      */
     @PostMapping("/uuidCk")
-    public int uuidChk(@RequestBody Map<String, String> request) throws Exception {
+    public int uuidCheck(@RequestBody Map<String, String> request) throws Exception {
 
         String uuid = request.get("uuid");
         log.info("/member/uuidCk -> " + uuid);
@@ -183,29 +183,13 @@ public class MemberController {
      * @return the response entity
      * @throws Exception the exception
      */
-// 로그인
-    /*@RequestMapping(value = "/loginPost", method = RequestMethod.POST)
-    public  ResponseEntity<?> loginPOST(@RequestBody @NotNull LoginDTO dto) throws Exception {
+    @PostMapping("/loginPost")
+    public ResponseEntity<?> loginPOST(@RequestBody @NotNull LoginDTO dto) throws Exception {
 
-        log.info("/******************************************** loginPost");
-        log.info(dto.toString());
+        memberService.login(dto);
 
         try {
-            final String token = jwtUtils.generateToken(dto.getUuid());
-            log.info("/*** 인코딩 !!!! token=" + token);
-
-            // JWT 토큰 유효성 검사
-            boolean isValidToken = jwtUtils.validateToken(token, dto.getUuid());
-            log.info("토큰 유효성: " + isValidToken);
-
-            // 저장된 해시된 비밀번호 가져오기
-            String storedHashedPassword = mapper.getHashedPasswordByUuid(dto.getUuid());
-            log.info("저장된 해시된 비밀번호 가져오기!!!! Stored Hashed Password: " + storedHashedPassword);
-
-            // 비밀번호 비교
-            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            boolean isPasswordMatch = passwordEncoder.matches(dto.getUpw(), storedHashedPassword);
-            log.info("비밀번호 일치 여부: " + isPasswordMatch);
+            
 
             if (isPasswordMatch) {
                 // 로그인 성공 시, 토큰과 사용자 정보를 응답 본문과 헤더에 포함하여 클라이언트에 전달
@@ -230,7 +214,7 @@ public class MemberController {
             log.error("로그인 처리 중 오류 발생", e);
             return new ResponseEntity<>("서버 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }*/
+    }
 
     /**
      * Login cookie response entity.
