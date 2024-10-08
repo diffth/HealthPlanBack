@@ -46,26 +46,6 @@ public class NewsController {
 		return newsService.selectTodoList(pageRequestDTO);
 	}
 
-//	@GetMapping("/slist")
-//	public PageResponseDTO<SubscribeVO> slist(PageRequestDTO pageRequestDTO) {
-//		log.info("/api/slist--------------> " + pageRequestDTO.toString());
-//		PageResponseDTO dto = newsService.selectSList(pageRequestDTO);
-//		log.info("dto -> " + dto.toString());
-//		return newsService.selectSList(pageRequestDTO);
-//	}
-
-//	@GetMapping("/slist")
-//	public PageResponseDTO<SubscribeVO> slist(PageRequestDTO pageRequestDTO, SearchCriteria cri) {
-//		log.info("/api/pageRequestDTO --------------> " + pageRequestDTO);
-//		log.info("/api/cri --------------> " + cri);
-//
-//		//PageMaker pageMaker = new PageMaker();
-//		//pageRequestDTO.setCri(cri);
-//		//pageRequestDTO.setTotalCount(newsService.selectSubscribeLessionCount());
-//		//pageRequestDTO.makeSearch(pageRequestDTO.getPage());
-//		//List<SubscribeVO> dtoList = newsService.selectSList(pageRequestDTO);
-//		return newsService.selectSList(pageRequestDTO);
-//	}
 
 	@GetMapping("/slist")
 	public Map<String, Object> slist(SearchCriteria cri) {
