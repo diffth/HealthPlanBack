@@ -71,6 +71,13 @@ public class MemberController {
         return list;
     }
 
+    /**
+     * Uuid chk int.
+     *
+     * @param request the request
+     * @return the int
+     * @throws Exception the exception
+     */
     @PostMapping("/uuidCk")
     public int uuidChk(@RequestBody Map<String, String> request) throws Exception {
 
@@ -81,6 +88,13 @@ public class MemberController {
         return result;
     }
 
+    /**
+     * M insert string.
+     *
+     * @param member the member
+     * @return the string
+     * @throws Exception the exception
+     */
     @PostMapping("/register")
     public String mInsert(@RequestBody MemberEntity member) throws Exception {
         log.info("/member/register -> " + member);
