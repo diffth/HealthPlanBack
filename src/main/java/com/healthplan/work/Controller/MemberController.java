@@ -47,17 +47,12 @@ public class MemberController {
 //    private final PasswordEncoder passwordEncoder;
 
 
-    /**
-     * Instantiates a new Member controller.
-     *
-     * @param passwordEncoder the password encoder
-     */
 //    public MemberController(PasswordEncoder passwordEncoder) {
 //        this.passwordEncoder = passwordEncoder;
 //    }
 
     /**
-     * Select list.
+     * M list list.
      *
      * @return the list
      * @throws Exception the exception
@@ -71,6 +66,13 @@ public class MemberController {
         return list;
     }
 
+    /**
+     * Uuid chk int.
+     *
+     * @param request the request
+     * @return the int
+     * @throws Exception the exception
+     */
     @PostMapping("/uuidCk")
     public int uuidChk(@RequestBody Map<String, String> request) throws Exception {
 
@@ -81,6 +83,13 @@ public class MemberController {
         return result;
     }
 
+    /**
+     * M insert string.
+     *
+     * @param member the member
+     * @return the string
+     * @throws Exception the exception
+     */
     @PostMapping("/register")
     public String mInsert(@RequestBody MemberEntity member) throws Exception {
         log.info("/member/register -> " + member);
@@ -118,6 +127,18 @@ public class MemberController {
 
 
     /**
+     * Select mno response entity.
+     *
+     * @param dto  the dto
+     * @param mnos the mnos
+     * @return the response entity
+     * @return the uuids by mnos
+     * @throws Exception the exception
+     *                   <p>
+     *                   Gets uuids by mnos.
+     * @throws Exception the exception
+     */
+/**
      * Gets uuids by mnos.
      *
      * @param mnos the mnos
@@ -130,14 +151,7 @@ public class MemberController {
     }*/
 
 
-    /**
-     * Select mno response entity.
-     *
-     * @param requestData the request data
-     * @return the response entity
-     * @throws Exception the exception
-     */
-// 회원번호 조회
+    // 회원번호 조회
     /*@RequestMapping(value = "/readMno", method = RequestMethod.POST)
     public ResponseEntity<MemberEntity> selectMno(@RequestBody Map<String, String> requestData) throws Exception {
 
@@ -159,22 +173,8 @@ public class MemberController {
     }*/
 
 
-
-
-
-    /**
-     * Login post response entity.
-     *
-     * @param dto the dto
-     * @return the response entity
-     * @throws Exception the exception
-     */
-// 로그인
-    /*@RequestMapping(value = "/loginPost", method = RequestMethod.POST)
+    @PostMapping("/loginPost")
     public  ResponseEntity<?> loginPOST(@RequestBody @NotNull LoginDTO dto) throws Exception {
-
-        log.info("/******************************************** loginPost");
-        log.info(dto.toString());
 
         try {
             final String token = jwtUtils.generateToken(dto.getUuid());
@@ -216,7 +216,7 @@ public class MemberController {
             log.error("로그인 처리 중 오류 발생", e);
             return new ResponseEntity<>("서버 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }*/
+    }
 
     /**
      * Login cookie response entity.
