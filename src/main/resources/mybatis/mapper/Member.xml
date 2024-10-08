@@ -4,8 +4,7 @@
 <mapper namespace="com.healthplan.work.dao.MemberMapper">
 
     <!-- 회원 리스트 -->
-    <select id="selectMemberList"
-            resultType="com.healthplan.work.vo.MemberEntity">
+    <select id="selectMemberList" resultType="com.healthplan.work.vo.MemberEntity">
         select *
         from MEMBER
         ORDER BY mno DESC
