@@ -56,12 +56,6 @@ public class MemberController {
 //        this.passwordEncoder = passwordEncoder;
 //    }
 
-    /**
-     * Select list.
-     *
-     * @return the list
-     * @throws Exception the exception
-     */
     @GetMapping("/list")
     public List<MemberEntity> mList() throws Exception {
 
@@ -160,21 +154,8 @@ public class MemberController {
 
 
 
-
-
-    /**
-     * Login post response entity.
-     *
-     * @param dto the dto
-     * @return the response entity
-     * @throws Exception the exception
-     */
-// 로그인
-    /*@RequestMapping(value = "/loginPost", method = RequestMethod.POST)
+    @PostMapping("/loginPost")
     public  ResponseEntity<?> loginPOST(@RequestBody @NotNull LoginDTO dto) throws Exception {
-
-        log.info("/******************************************** loginPost");
-        log.info(dto.toString());
 
         try {
             final String token = jwtUtils.generateToken(dto.getUuid());
@@ -216,7 +197,7 @@ public class MemberController {
             log.error("로그인 처리 중 오류 발생", e);
             return new ResponseEntity<>("서버 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }*/
+    }
 
     /**
      * Login cookie response entity.
