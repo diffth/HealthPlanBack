@@ -183,6 +183,7 @@ public class MemberController {
      * @return the response entity
      * @throws Exception the exception
      */
+// 로그인
     /*@RequestMapping(value = "/loginPost", method = RequestMethod.POST)
     public  ResponseEntity<?> loginPOST(@RequestBody @NotNull LoginDTO dto) throws Exception {
 
