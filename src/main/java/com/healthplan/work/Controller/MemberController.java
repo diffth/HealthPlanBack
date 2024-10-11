@@ -41,21 +41,6 @@ public class MemberController {
     @Autowired
     private MemberService memberService;
 
-//    private JwtUtils jwtUtils = new JwtUtils();
-
-    // private PasswordEncoder passwordEncoder;
-//    private final PasswordEncoder passwordEncoder;
-
-
-    /**
-     * Instantiates a new Member controller.
-     *
-     * @param passwordEncoder the password encoder
-     */
-//    public MemberController(PasswordEncoder passwordEncoder) {
-//        this.passwordEncoder = passwordEncoder;
-//    }
-
     /**
      * Select list.
      *
@@ -172,10 +157,6 @@ public class MemberController {
         }
     }*/
 
-
-
-
-
     /**
      * Login post response entity.
      *
@@ -183,129 +164,43 @@ public class MemberController {
      * @return the response entity
      * @throws Exception the exception
      */
-    @PostMapping("/loginPost")
-    public  ResponseEntity<?> loginPOST(@RequestBody @NotNull LoginDTO dto) throws Exception {
-        log.info("/member/loginPost -> " + dto);
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody @NotNull LoginDTO dto) throws Exception {
+        log.info("/member/login -> " + dto);
+
+        ResponseEntity responseEntity = null;
 
         try {
-
-            /*final String token = jwtUtils.generateToken(dto.getUuid());
-            log.info("/*** 인코딩 !!!! token=" + token);
-
-            // JWT 토큰 유효성 검사
-            boolean isValidToken = jwtUtils.validateToken(token, dto.getUuid());
-            log.info("토큰 유효성: " + isValidToken);
-
-            // 저장된 해시된 비밀번호 가져오기
-            String storedHashedPassword = mapper.getHashedPasswordByUuid(dto.getUuid());
-            log.info("저장된 해시된 비밀번호 가져오기!!!! Stored Hashed Password: " + storedHashedPassword);
-
-            // 비밀번호 비교
-            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            boolean isPasswordMatch = passwordEncoder.matches(dto.getUpw(), storedHashedPassword);
-            log.info("비밀번호 일치 여부: " + isPasswordMatch);
-
-            if (isPasswordMatch) {
-                // 로그인 성공 시, 토큰과 사용자 정보를 응답 본문과 헤더에 포함하여 클라이언트에 전달
-                MemberEntity loggedInMember = mapper.login(dto);
-
-                // 응답 헤더에 토큰 포함
-                HttpHeaders responseHeaders = new HttpHeaders();
-                responseHeaders.set("Authorization", "Bearer " + token);
-
-                // 응답 본문에도 JWT 토큰과 사용자 정보 포함
-                Map<String, Object> responseBody = new HashMap<>();
-                responseBody.put("member", loggedInMember);
-                responseBody.put("token", token);
-
-                return new ResponseEntity<>(responseBody, responseHeaders, HttpStatus.OK);
-
-            } else {
-                // 비밀번호 불일치 시
-                return new ResponseEntity<>("비밀번호가 일치하지 않습니다.", HttpStatus.UNAUTHORIZED);
-            }*/
+           responseEntity = memberService.loginConfirm(dto);
 
         } catch (Exception e) {
             log.error("로그인 처리 중 오류 발생", e);
-            return new ResponseEntity<>("서버 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+            responseEntity = new ResponseEntity<>("서버 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return null;
+        return responseEntity;
     }
 
     /**
      * Login cookie response entity.
      *
-     * @param requestData the request data
+     * @param request the request
      * @return the response entity
      * @throws Exception the exception
      */
-// 쿠키 관리
-    /*@RequestMapping(value = "/loginCookie", method = RequestMethod.POST)
-    public  ResponseEntity<?> loginCookie(@RequestBody @NotNull Map<String, String> requestData) throws Exception {
+    @PostMapping("/loginCookie")
+    public ResponseEntity<?> loginCookie(@RequestBody @NotNull Map<String, String> request) throws Exception {
+        log.info("/member/loginCookie -> " + request);
 
-        log.info("/*************** /loginCookie 시작...");
-        //logger.info("/*************** dto 뭐 받았니"+dto.toString());
-
-        String token = requestData.get("token");  // token 값 추출
-        System.out.println("/***************  받은 토큰 보자!!! =" + token);
-
-        if (token == null || token.isEmpty()) {
-            return new ResponseEntity<>("토큰이 없습니다.", HttpStatus.UNAUTHORIZED);
-        }
+        ResponseEntity responseEntity = null;
 
         try {
-            // JWT 토큰에서 uuid 추출 (JwtUtils는 토큰을 처리하는 유틸리티 클래스라고 가정)
-            String uuid = jwtUtils.getUuidFromToken(token);
-
-            // 토큰이 유효한지 확인
-            if (jwtUtils.validateToken(token, uuid)) {
-                log.info("/*************** token의 id 보여줘  " + uuid);
-
-                return ResponseEntity.ok(Map.of("uuid", uuid));  // 유효하면 uuid를 반환
-
-            } else {
-                return new ResponseEntity<>("유효하지 않은 토큰입니다.", HttpStatus.UNAUTHORIZED);
-            }
+            responseEntity = memberService.loginCookie(request);
 
         } catch (Exception e) {
-            return new ResponseEntity<>("서버 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+            responseEntity = new ResponseEntity<>("서버 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-    }*/
-
-    /**
-     * Logout string.
-     *
-     * @param request  the request
-     * @param response the response
-     * @param session  the session
-     * @return the string
-     * @throws Exception the exception
-     */
-// 로그아웃
-    /*@RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public String logout(HttpServletRequest request, HttpServletResponse response, HttpSession session)
-            throws Exception {
-
-        Object obj = session.getAttribute("login");
-
-        if (obj != null) {
-            MemberEntity mem = (MemberEntity) obj;
-
-            session.removeAttribute("login");
-            session.invalidate();
-
-            Cookie loginCookie = WebUtils.getCookie(request, "loginCookie");
-
-            if (loginCookie != null) {
-                loginCookie.setPath("/");
-                loginCookie.setMaxAge(0);
-                response.addCookie(loginCookie);
-                mapper.keepLogin(mem.getUuid(), session.getId(), new Date());
-            }
-        }
-        return "success";
-    }*/
+        return responseEntity;
+    }
 
     /**
      * Email ck int.

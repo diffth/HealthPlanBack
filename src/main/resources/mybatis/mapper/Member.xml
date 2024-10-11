@@ -117,28 +117,34 @@
 
     <select id="selectPassword" resultType="java.lang.String">
 
-        select upw
-        from member
-        where uuid = #{uuid}
+        SELECT
+              UPW
+        FROM  MEMBER
+        WHERE UUID = #{uuid}
         
     </select>
 
 
     <!-- 로그인 -->
     <select id="login" resultType="com.healthplan.work.vo.MemberEntity" parameterType="map">
-        select *
-        from member
-        where
-        uuid = #{uuid}
-        and upw = #{upw}
+
+        SELECT
+              *
+        FROM  MEMBER
+        WHERE 1=1
+          AND UUID = #{uuid}
+          AND UPW  = #{upw}
+
     </select>
 
     <!-- 쿠키가 있다면 로그인 유지 -->
     <update id="keepLogin">
+
         update member
         set sessionKey = #{sessionId},
         sessionLimit = #{next}
         where uuid = #{uuid}
+
     </update>
 
     <!-- 아이디 중복 체크 -->

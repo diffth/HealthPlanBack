@@ -35,9 +35,6 @@ public interface MemberMapper {
     // 로그인 > 비밀번호 일치 여부 확인
     public String getHashedPasswordByUuid(String uuid) throws Exception;
 
-    // 로그인
-    public MemberEntity login(LoginDTO dto) throws Exception;
-
     // 세션이 있다면 로그인 유지
     public void keepLogin(String uuid, String id, Date sessionLimit) throws Exception;
 
@@ -72,5 +69,6 @@ public interface MemberMapper {
 
     public String selectPassword(String uuid) throws Exception;
 
+    public MemberEntity login(LoginDTO dto) throws Exception;
 
 }
