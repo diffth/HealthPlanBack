@@ -183,15 +183,13 @@ public class MemberController {
      * @return the response entity
      * @throws Exception the exception
      */
-// 로그인
-    /*@RequestMapping(value = "/loginPost", method = RequestMethod.POST)
+    @PostMapping("/loginPost")
     public  ResponseEntity<?> loginPOST(@RequestBody @NotNull LoginDTO dto) throws Exception {
-
-        log.info("/******************************************** loginPost");
-        log.info(dto.toString());
+        log.info("/member/loginPost -> " + dto);
 
         try {
-            final String token = jwtUtils.generateToken(dto.getUuid());
+
+            /*final String token = jwtUtils.generateToken(dto.getUuid());
             log.info("/*** 인코딩 !!!! token=" + token);
 
             // JWT 토큰 유효성 검사
@@ -225,12 +223,14 @@ public class MemberController {
             } else {
                 // 비밀번호 불일치 시
                 return new ResponseEntity<>("비밀번호가 일치하지 않습니다.", HttpStatus.UNAUTHORIZED);
-            }
+            }*/
+
         } catch (Exception e) {
             log.error("로그인 처리 중 오류 발생", e);
             return new ResponseEntity<>("서버 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }*/
+        return null;
+    }
 
     /**
      * Login cookie response entity.
