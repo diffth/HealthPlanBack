@@ -71,4 +71,5 @@ public interface MemberMapper {
 
     public MemberEntity login(LoginDTO dto) throws Exception;
 
+    MemberEntity selectMember(String uuid) throws Exception;
 }

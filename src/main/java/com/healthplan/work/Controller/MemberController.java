@@ -1,31 +1,15 @@
 package com.healthplan.work.Controller;
 
-import com.healthplan.work.dao.MemberMapper;
 import com.healthplan.work.dto.LoginDTO;
 import com.healthplan.work.service.MemberService;
-import com.healthplan.work.util.JwtUtils;
 import com.healthplan.work.vo.MemberEntity;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.util.WebUtils;
 
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -246,36 +230,6 @@ public class MemberController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-    }*/
-
-
-    /**
-     * Select mem id response entity.
-     *
-     * @param requestData the request data
-     * @return the response entity
-     * @throws Exception the exception
-     */
-// 마이페이지 회원정보 조회
-    /*@RequestMapping(value = "/read", method = RequestMethod.POST)
-    public ResponseEntity<MemberEntity> selectMemId(@RequestBody Map<String, String> requestData) throws Exception {
-
-        // Map에서 "uuid" 값 추출
-        String uuid = requestData.get("uuid");
-        // 로그로 uuid 확인
-        log.info("조회할 아이디 : " + uuid);
-
-        MemberEntity memberInfo = mapper.selectUuid(uuid);
-
-        log.info("/************************** 일단 마이페이지 정보 보여줘" + memberInfo);
-
-        if (memberInfo != null) {
-            log.info("/************************** 성공한 마이페이지 정보 보여줘" + memberInfo);
-            return ResponseEntity.ok(memberInfo);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        // return mapper.selectUuid(mem.getUuid());
     }*/
 
     /**

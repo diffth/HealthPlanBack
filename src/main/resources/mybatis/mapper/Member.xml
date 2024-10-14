@@ -196,6 +196,29 @@
         m.uuid = #{uuid}
     </select>
 
+
+    <select id="selectMember" resultType="com.healthplan.work.vo.MemberEntity">
+
+        SELECT
+              M.UUID
+            , M.MNO
+            , M.PHONE
+            , M.UPW
+            , M.NAME
+            , M.MTYPE
+            , M.EMAIL
+            , M.REGDATE
+            , M.SESSIONKEY
+            , M.SESSIONLIMIT
+            , M.SSTYPE
+            , P.PCOUNT
+        FROM  MEMBER M LEFT OUTER JOIN POINT P ON M.MNO = P.MNO
+        WHERE 1=1
+        AND M.UUID = #{uuid}
+
+    </select>
+
+
     <!-- 이름조회 -->
     <select id="selectName" resultType="com.healthplan.work.vo.MemberEntity">
         SELECT name

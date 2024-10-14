@@ -138,7 +138,13 @@ public class MemberService {
 
         // 토큰이 유효한지 확인
         if (jwtUtils.validateToken(token, uuid)) {
-            result = ResponseEntity.ok(Map.of("uuid", uuid));  // 유효하면 uuid를 반환
+            //result = ResponseEntity.ok(Map.of("uuid", uuid));  // 유효하면 uuid를 반환
+            Map<String, Object> responseVo = new HashMap<>();
+            MemberEntity memberInfo = memberMapper.selectMember(uuid);
+            responseVo.put("uuid", uuid);
+            responseVo.put("vo", memberInfo);
+            result = ResponseEntity.ok().body(responseVo);
+
         } else {
             result =  new ResponseEntity<>("유효하지 않은 토큰입니다.", HttpStatus.UNAUTHORIZED);
         }
