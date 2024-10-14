@@ -150,4 +150,28 @@ public class MemberService {
         }
         return result;
     }
+
+    /**
+     * Update member.
+     *
+     * @param member the member
+     * @throws Exception the exception
+     */
+    public void updateMember(MemberEntity member) throws Exception {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(member.getUpw());
+
+        member.setUpw(hashedPassword);
+        memberMapper.updateMember(member);
+    }
+
+    /**
+     * Delete member.
+     *
+     * @param member the member
+     * @throws Exception the exception
+     */
+    public void deleteMember(MemberEntity member) throws Exception {
+        memberMapper.deleteMember(member);
+    }
 }

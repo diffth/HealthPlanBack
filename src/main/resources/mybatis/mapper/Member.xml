@@ -10,13 +10,6 @@
         ORDER BY mno DESC
     </select>
 
-<!--    &lt;!&ndash; mno로 회원정보 조회 &ndash;&gt;
-    <select id ="selectMno" resultType ="com.healthplan.work.vo.MemberEntity">
-        select *
-        from MEMBER
-        where mno = #{mno}
-    </select>-->
-
     <!--회원번호로 아이디 조회 (댓글)-->
     <select id="selectUuidByMno" resultType="java.lang.String" parameterType="int">
         SELECT uuid
@@ -100,7 +93,7 @@
         ) VALUES (
               PNO_SEQ.NEXTVAL
             , #{mno}
-            , '0'
+            , '5000'
             , 'J'
             , SYSDATE
         )
@@ -248,10 +241,29 @@
         uuid=#{uuid}
     </update>
 
+    <update id="updateMember" parameterType="com.healthplan.work.vo.MemberEntity" >
+
+        UPDATE MEMBER
+        SET
+              UPW   = #{upw}
+            , PHONE = #{phone}
+            , EMAIL = #{email}
+        WHERE 1=1
+          AND UUID  = #{uuid}
+
+    </update>
+
     <!-- 회원탈퇴 -->
     <delete id="delete">
         delete from member
         where uuid = #{uuid}
+    </delete>
+
+    <delete id="deleteMember">
+
+        DELETE FROM MEMBER
+        WHERE UUID = #{uuid}
+
     </delete>
 
 
