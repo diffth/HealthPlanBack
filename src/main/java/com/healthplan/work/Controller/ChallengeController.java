@@ -24,16 +24,6 @@ public class ChallengeController {
     private ChallengeService challengeService;
 
     /**
-     * Index string.
-     *
-     * @return the string
-     */
-    @GetMapping("/")
-    public String index() {
-        return "redirect:/challenge/challengelist";
-    }
-
-    /**
      * 챌린지 목록 표시
      * Clist map.
      *
@@ -44,7 +34,7 @@ public class ChallengeController {
     @GetMapping("/challengeList")
     public Map<String, Object> clist(SearchCriteria cri) throws Exception {
 
-        log.info("/******************************* 챌린지 리스트 돈다 ");
+        log.info("/******************************* 챌린지 리스트");
         Map<String, Object> result = new HashMap<>();
 
         //전체검색 onchange x
