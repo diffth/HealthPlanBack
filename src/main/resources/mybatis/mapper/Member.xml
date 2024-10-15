@@ -119,7 +119,7 @@
 
 
     <!-- 로그인 -->
-    <select id="login" resultType="com.healthplan.work.vo.MemberEntity" parameterType="map">
+    <select id="login" resultType="com.healthplan.work.vo.MemberEntity">
 
         SELECT
               *
@@ -190,24 +190,25 @@
     </select>
 
 
-    <select id="selectMember" resultType="com.healthplan.work.vo.MemberEntity">
+    <select id="selectMember" parameterType="String" resultType="Hashmap">
 
         SELECT
-              M.UUID
-            , M.MNO
-            , M.PHONE
-            , M.UPW
-            , M.NAME
-            , M.MTYPE
-            , M.EMAIL
-            , M.REGDATE
-            , M.SESSIONKEY
-            , M.SESSIONLIMIT
-            , M.SSTYPE
-            , P.PCOUNT
-        FROM  MEMBER M LEFT OUTER JOIN POINT P ON M.MNO = P.MNO
+              UUID
+            , MNO
+            , PHONE
+            , UPW
+            , NAME
+            , MTYPE
+            , EMAIL
+            , TO_CHAR(REGDATE, 'YYYY-MM-DD HH24:MI') AS REGDATE
+            , SSTYPE
+            , ( SELECT PCOUNT
+                FROM POINT
+                WHERE MNO = ( SELECT MNO FROM MEMBER WHERE UUID = #{uuid})
+              ) AS PCOUNT
+        FROM  MEMBER
         WHERE 1=1
-        AND M.UUID = #{uuid}
+          AND UUID = #{uuid}
 
     </select>
 

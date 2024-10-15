@@ -5,6 +5,7 @@ import com.healthplan.work.vo.MemberEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * The interface Member mapper.
@@ -79,7 +80,7 @@ public interface MemberMapper {
      * @return the member entity
      * @throws Exception the exception
      */
-    public MemberEntity selectMember(String uuid) throws Exception;
+    public Map<String, Object> selectMember(String uuid) throws Exception;
 
     /**
      * Update member.

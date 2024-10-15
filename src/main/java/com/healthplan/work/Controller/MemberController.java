@@ -48,7 +48,7 @@ public class MemberController {
      * @throws Exception the exception
      */
     @PostMapping("/uuidCk")
-    public int uuidChk(@RequestBody Map<String, String> request) throws Exception {
+    public int uuidChk(@RequestBody @NotNull Map<String, String> request) throws Exception {
 
         String uuid = request.get("uuid");
         log.info("/member/uuidCk -> " + uuid);
@@ -103,7 +103,7 @@ public class MemberController {
      * @throws Exception the exception
      */
     @PostMapping("/loginCookie")
-    public ResponseEntity<?> loginCookie(@RequestBody @NotNull Map<String, String> request) throws Exception {
+    public ResponseEntity<?> loginCookie(@RequestBody Map<String, String> request) throws Exception {
         log.info("/member/loginCookie -> " + request);
 
         ResponseEntity responseEntity = null;

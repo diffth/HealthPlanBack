@@ -97,6 +97,7 @@ public class MemberService {
 
         if (pwMatch) {
             // 로그인 성공 시, 토큰과 사용자 정보를 응답 본문과 헤더에 포함하여 클라이언트에 전달
+            dto.setUpw(password);
             MemberEntity loggedInMember = memberMapper.login(dto);
 
             // 응답 헤더에 토큰 포함
@@ -124,7 +125,7 @@ public class MemberService {
      * @return the response entity
      * @throws Exception the exception
      */
-    public ResponseEntity loginCookie(@NotNull Map<String, String> request) throws Exception {
+    public ResponseEntity loginCookie(Map<String, String> request) throws Exception {
         ResponseEntity result = null;
 
         String token = request.get("token");  // token 값 추출
@@ -140,9 +141,10 @@ public class MemberService {
         if (jwtUtils.validateToken(token, uuid)) {
             //result = ResponseEntity.ok(Map.of("uuid", uuid));  // 유효하면 uuid를 반환
             Map<String, Object> responseVo = new HashMap<>();
-            MemberEntity memberInfo = memberMapper.selectMember(uuid);
+            Map<String, Object> memberInfo = memberMapper.selectMember(uuid);
             responseVo.put("uuid", uuid);
             responseVo.put("vo", memberInfo);
+
             result = ResponseEntity.ok().body(responseVo);
 
         } else {
