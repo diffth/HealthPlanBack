@@ -16,6 +16,7 @@
 	<!-- 강의 목록 테스트 -->
 	<select id="listSub" resultType="com.healthplan.work.vo.SubscribeVO">
 
+
 		SELECT *
 		FROM
 		(
