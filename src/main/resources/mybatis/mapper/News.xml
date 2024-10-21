@@ -5,7 +5,7 @@
 
 	<!-- 뉴스 조회 -->
 	<select id="listNews" resultType="com.healthplan.work.vo.NewsEntity">
-		select * from point
+		SELECT * FROM POINT
 	</select>
 
 	<!-- 뉴스 상세 -->
