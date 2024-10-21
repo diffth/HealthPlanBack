@@ -31,7 +31,7 @@ public class NewsController {
 
 	@GetMapping("/hello")
 	public String hello() throws Exception {
-		return "Hello React!";
+		return "Hello React2!";
 	}
 
 	@GetMapping("/list")
