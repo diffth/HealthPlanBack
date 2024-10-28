@@ -13,6 +13,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The type Subscribe service.
+ */
 @Service
 @Log4j2
 public class SubscribeService {
@@ -20,15 +23,35 @@ public class SubscribeService {
     @Autowired
     private SubscribeMapper subscribeMapper;
 
+    /**
+     * Select subscribe list list.
+     *
+     * @param cri the cri
+     * @return the list
+     * @throws Exception the exception
+     */
     public List<SubscribeVO> selectSubscribeList(SearchCriteria cri) throws Exception {
         return subscribeMapper.selectSubscribeList(cri);
     }
 
+    /**
+     * Select subscr lessionibe read subscribe vo.
+     *
+     * @param sno the sno
+     * @return the subscribe vo
+     * @throws Exception the exception
+     */
     public SubscribeVO selectSubscrLessionibeRead(int sno) throws Exception {
         subscribeMapper.updateSubscribeLessionCount(sno);
         return subscribeMapper.selectSubscribeLessionRead(sno);
     }
 
+    /**
+     * Subscribe insert.
+     *
+     * @param vo the vo
+     * @throws Exception the exception
+     */
     public void subscribeInsert(SubscribeVO vo) throws Exception {
         subscribeMapper.insertSubscribe(vo);
 
@@ -47,23 +70,55 @@ public class SubscribeService {
         }
     }
 
+    /**
+     * Subscribe update.
+     *
+     * @param vo the vo
+     * @throws Exception the exception
+     */
     public void subscribeUpdate(SubscribeVO vo) throws Exception {
         subscribeMapper.updateSubscribe(vo);
     }
 
+    /**
+     * Subscribe delete.
+     *
+     * @param sno the sno
+     * @throws Exception the exception
+     */
     public void subscribeDelete(int sno) throws Exception {
         subscribeMapper.deleteSubscribe(sno);
         subscribeMapper.deleteSubscribeLession(sno);
     }
 
+    /**
+     * Select subscribe lession list list.
+     *
+     * @param cri the cri
+     * @return the list
+     * @throws Exception the exception
+     */
     public List<SubscribeVO> selectSubscribeLessionList(SearchCriteria cri) throws Exception {
         return subscribeMapper.selectSubscribeLessionList(cri);
     }
 
+    /**
+     * Select subscribe lession count int.
+     *
+     * @param cri the cri
+     * @return the int
+     * @throws Exception the exception
+     */
     public int selectSubscribeLessionCount(SearchCriteria cri) throws Exception {
         return subscribeMapper.selectSubscribeLessionCount(cri);
     }
 
+    /**
+     * Subscribe lession insert.
+     *
+     * @param vo the vo
+     * @throws Exception the exception
+     */
     public void subscribeLessionInsert(SubscribeVO vo) throws Exception {
         subscribeMapper.insertSubscribeLession(vo);
 
@@ -104,6 +159,12 @@ public class SubscribeService {
 //        }
     }
 
+    /**
+     * Select subscribe update.
+     *
+     * @param vo the vo
+     * @throws Exception the exception
+     */
     public void selectSubscribeUpdate(SubscribeVO vo) throws Exception {
         subscribeMapper.updateSubscribeLession(vo);
 
@@ -125,19 +186,46 @@ public class SubscribeService {
         }
     }
 
+    /**
+     * Subscribe lession delete.
+     *
+     * @param sno the sno
+     * @throws Exception the exception
+     */
     public void subscribeLessionDelete(int sno) throws Exception {
         subscribeMapper.deleteSubscribeLession(sno);
     }
 
+    /**
+     * Select subscribe read subscribe vo.
+     *
+     * @param sno the sno
+     * @return the subscribe vo
+     * @throws Exception the exception
+     */
     public SubscribeVO selectSubscribeRead(int sno) throws Exception {
         subscribeMapper.updateSubscribeCount(sno);
         return subscribeMapper.selectSubscribeRead(sno);
     }
 
+    /**
+     * Select image list list.
+     *
+     * @param sno the sno
+     * @return the list
+     * @throws Exception the exception
+     */
     public List<ImageDTO> selectImageList(int sno) throws Exception {
         return subscribeMapper.selectImageList(sno);
     }
 
+    /**
+     * Select subscribe count int.
+     *
+     * @param cri the cri
+     * @return the int
+     * @throws Exception the exception
+     */
     public int selectSubscribeCount(SearchCriteria cri) throws Exception {
         return subscribeMapper.selectSubscribeCount(cri);
     }

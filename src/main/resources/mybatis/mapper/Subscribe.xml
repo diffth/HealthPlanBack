@@ -9,27 +9,27 @@
 		SELECT *
 		FROM
 		(
-		SELECT
-		ROWNUM AS RNUM
-		, SNO
-		, MNO
-		, UUID
-		, STYPE
-		, TITLE
-		, CONTENTS
-		, TO_CHAR(WDATE, 'YYYY-MM-DD') AS WDATE
-		, COUNTS
-		, FILEID
-		, REPLYCNT
-		, (SELECT IMGNAME FROM NATTACH WHERE IMGTYPE = 'M' AND SNO = S.SNO) AS TITLEIMG
-		, SPOINT
-		FROM  SUBSCRIBE S
-		WHERE 1=1
-		AND STYPE = 'T'
+			SELECT
+				  ROWNUM AS RNUM
+				, SNO
+				, MNO
+				, UUID
+				, STYPE
+				, TITLE
+				, CONTENTS
+				, TO_CHAR(WDATE, 'YYYY-MM-DD') AS WDATE
+				, COUNTS
+				, FILEID
+				, REPLYCNT
+				, (SELECT IMGNAME FROM NATTACH WHERE IMGTYPE = 'M' AND SNO = S.SNO) AS TITLEIMG
+				, SPOINT
+			FROM  SUBSCRIBE S
+			WHERE 1=1
+			AND STYPE = 'T'
 
-		<include refid="search"></include>
+			<include refid="search"></include>
 
-		ORDER BY SNO DESC
+			ORDER BY SNO DESC
 		)
 		WHERE RNUM BETWEEN #{pageStart} AND #{pageEnd}
 		ORDER BY RNUM
@@ -76,7 +76,7 @@
 			, SPOINT
 			, WDATE
 			) VALUES (
-			SNO_SEQ.NEXTVAL
+			  SNO_SEQ.NEXTVAL
 			, #{mno}
 			, #{uuid}
 			, 'L'
@@ -188,7 +188,7 @@
 			, STYPE
 			, TITLE
 			, CONTENTS
-			, TO_CHAR(WDATE, 'YYYY-MM-DD') AS WDATE
+			, TO_CHAR(WDATE, 'YYYY.MM.DD') AS WDATE
 			, COUNTS
 			, FILEID
 			, REPLYCNT
