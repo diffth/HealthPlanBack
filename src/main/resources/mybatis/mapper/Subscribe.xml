@@ -328,6 +328,7 @@
 			, PATH
 			, IMGTYPE
 			, SNO
+			, ANO
 			, REGDATE
 		)
 		VALUES (
@@ -337,6 +338,7 @@
 			, #{path}
 			, #{imgType}
 			, SNO_SEQ.CURRVAL
+			, ANO_SEQ.NEXTVAL
 			, SYSDATE
 		)
 
