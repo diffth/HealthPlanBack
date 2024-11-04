@@ -229,4 +229,14 @@ public class SubscribeService {
     public int selectSubscribeCount(SearchCriteria cri) throws Exception {
         return subscribeMapper.selectSubscribeCount(cri);
     }
+
+    /**
+     * Select main image image dto.
+     *
+     * @param sno the sno
+     * @return the image dto
+     */
+    public List<ImageDTO> selectMainImage(int sno) throws Exception {
+        return subscribeMapper.selectMainImage(sno);
+    }
 }
