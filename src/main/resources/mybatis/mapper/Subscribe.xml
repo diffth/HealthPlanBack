@@ -377,6 +377,7 @@
 			, IMAGEURL
 			, UUID
 			, PATH
+			, IMGTYPE
 		FROM  NATTACH
 		WHERE SNO = #{sno}
 		ORDER BY REGDATE
