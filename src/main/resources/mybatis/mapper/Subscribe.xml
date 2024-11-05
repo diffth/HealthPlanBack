@@ -17,15 +17,15 @@
 				, STYPE
 				, TITLE
 				, CONTENTS
-				, TO_CHAR(WDATE, 'YYYY-MM-DD') AS WDATE
+				, TO_CHAR(WDATE, 'YYYY.MM.DD') AS WDATE
 				, COUNTS
 				, FILEID
 				, REPLYCNT
 				, (SELECT IMGNAME FROM NATTACH WHERE IMGTYPE = 'M' AND SNO = S.SNO) AS TITLEIMG
-				, SPOINT
+				, TO_CHAR(SPOINT, 'FM999,999,999,999') AS SPOINT
 			FROM  SUBSCRIBE S
 			WHERE 1=1
-			AND STYPE = 'T'
+			  AND STYPE = 'T'
 
 			<include refid="search"></include>
 
